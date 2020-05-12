@@ -138,6 +138,16 @@ services:
         published: 80
         protocol: tcp
 
+  adminer:
+      image: wodby/adminer
+      container_name: recrutas-adminer
+      environment:
+          - ADMINER_DEFAULT_DB_DRIVER=pgsql
+          - ADMINER_DEFAULT_DB_HOST=db
+          - ADMINER_DEFAULT_DB_NAME=api
+      ports:
+          - 9000:9000
+
 volumes:
   db-data: {}
   dev-certs: {}
