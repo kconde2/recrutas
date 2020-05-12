@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -24,49 +24,39 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import AsyncStorage from '@react-native-community/async-storage'
+
+const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
+
 const App: () => React$Node = () => {
+  const [count, setCount] = useState(0);
+
+  const onSave = () => {
+    AsyncStorage.setItem('count', JSON.stringify(count)).then(() => alert('ok'));
+  }
+
+  useEffect(()=> {
+    fetch('http://localhost:3000/api/users').
+    then(response => response.json())
+  }, [])
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
+        <Card>
+          <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
+          <Card.Content>
+            <Title>Card title {count} </Title>
+            <Paragraph>Card content</Paragraph>
+          </Card.Content>
+          <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+          <Card.Actions>
+            <Button onPress={() => setCount(count + 1)}>+1</Button>
+            <Button onPress={onSave}>onSave</Button>
+          </Card.Actions>
+        </Card>
       </SafeAreaView>
     </>
   );
