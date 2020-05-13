@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ApiResource()
@@ -15,6 +16,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -68,9 +71,15 @@ class User implements UserInterface
      */
     private $applications;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Offer", mappedBy="author")
+     */
+    private $offers;
+
     public function __construct()
     {
         $this->applications = new ArrayCollection();
+        $this->offers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -236,6 +245,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($application->getApplicant() === $this) {
                 $application->setApplicant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Offer[]
+     */
+    public function getOffers(): Collection
+    {
+        return $this->offers;
+    }
+
+    public function addOffer(Offer $offer): self
+    {
+        if (!$this->offers->contains($offer)) {
+            $this->offers[] = $offer;
+            $offer->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffer(Offer $offer): self
+    {
+        if ($this->offers->contains($offer)) {
+            $this->offers->removeElement($offer);
+            // set the owning side to null (unless already changed)
+            if ($offer->getAuthor() === $this) {
+                $offer->setAuthor(null);
             }
         }
 
