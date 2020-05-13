@@ -6,13 +6,15 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\OfferRepository")
  */
 class Offer
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -54,6 +56,11 @@ class Offer
      * @ORM\OneToMany(targetEntity="App\Entity\Application", mappedBy="offer")
      */
     private $applications;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="offers")
+     */
+    private $author;
 
     public function __construct()
     {
@@ -164,6 +171,18 @@ class Offer
                 $application->setOffer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
