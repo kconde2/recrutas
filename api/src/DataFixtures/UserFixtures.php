@@ -19,6 +19,7 @@ class UserFixtures extends Fixture
     {
         $this->passwordEncoder = $passwordEncoder;
     }
+
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -71,6 +72,7 @@ class UserFixtures extends Fixture
         foreach ($offers as $offer) {
             foreach ($userApplicant as $applicant) {
                 $application = new Application();
+                // Si apprentissage
                 if ($offer->getContratType() == ContractType::TYPE_APPRENTICE) {
                     $application->setAge($faker->numberBetween(16, 24));
                 } else {
