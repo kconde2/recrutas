@@ -3,7 +3,6 @@ security:
         App\Entity\User:
             algorithm: auto
 
-
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -30,6 +29,10 @@ security:
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+
+    role_hierarchy:
+        ROLE_APPLICANT: [ROLE_USER]
+        ROLE_RECRUITER: [ROLE_USER]
 
     access_control:
         - { path: ^/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
