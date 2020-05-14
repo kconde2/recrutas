@@ -8,10 +8,14 @@
 
 ### Emulator
 
-=> Check "instructions-ssl" file then :
+- Check `instructions-ssl.txt` file then :
 
-> yarn android
+```shell
+yarn android
+```
 
-then when the emulator has started
+- Then when the emulator has started
 
-> adb reverse tcp:8443 tcp:8443
+```shell
+adb reverse tcp:8443 tcp:8443
+```
