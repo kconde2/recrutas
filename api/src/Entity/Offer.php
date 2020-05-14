@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(
@@ -16,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     denormalizationContext={"groups"={"write_offer"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OfferRepository")
+ * @ApiFilter(SearchFilter::class, properties={"author": "exact"})
  */
 class Offer
 {
@@ -31,7 +34,7 @@ class Offer
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read_offer", "write_offer"})
+     * @Groups({"read_offer", "write_offer","read_application"})
      * @Assert\NotBlank(message="Ce champ est obligatoire")
      * @Assert\Length(
      *      min = 2,
@@ -66,7 +69,7 @@ class Offer
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read_offer", "write_offer"})
+     * @Groups({"read_offer", "write_offer","read_application"})
      * @Assert\NotNull(message="Ce champ est obligatoire")
      * @Assert\Choice(
      *     choices = { "cdi", "cdd", "apprentice", "interim" },

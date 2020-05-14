@@ -23,6 +23,7 @@ class Application
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read_offer"})
      */
     private $id;
 
@@ -34,36 +35,37 @@ class Application
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Offer", inversedBy="applications")
+     * @Groups({"read_application","read_offer"})
      */
     private $offer;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $motivation;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $wage;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $resume;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $status = ApplicationStatus::STATUS_CREATED;
 
