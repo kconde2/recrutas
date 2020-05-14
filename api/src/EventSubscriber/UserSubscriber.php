@@ -15,16 +15,21 @@ class UserSubscriber implements EventSubscriberInterface
 {
     private $userPasswordEncoder;
 
+    private $entityManager;
+
     public function __construct(
-        UserPasswordEncoderInterface $userPasswordEncoder
+        UserPasswordEncoderInterface $userPasswordEncoder,
+        EntityManagerInterface $entityManager
     ) {
         $this->userPasswordEncoder = $userPasswordEncoder;
+
+        $this->entityManager = $entityManager;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['encodePassword', EventPriorities::POST_WRITE],
+            KernelEvents::VIEW => ['encodePassword', EventPriorities::PRE_WRITE],
         ];
     }
 
@@ -44,24 +49,6 @@ class UserSubscriber implements EventSubscriberInterface
         }
 
         $user->setPassword($this->userPasswordEncoder->encodePassword($user, $user->getPassword()));
-    }
-
-    /**
-     * Send validation email with code and token link to validation account
-     *
-     * @param UserRegisteredEvent $event
-     * @return void
-     */
-    public function sendValidationMail(UserRegisteredEvent $event)
-    {
-        $user = $event->getUser();
-        $email = $user->getEmail();
-        $subject = "Validation de votre inscription sur Oh My Garde";
-
-        $view = $this->twig->render('emails/user/validation.html.twig', [
-            'user' => $user
-        ]);
-
-        $this->mailerService->send($email, $subject, $view);
+        $this->entityManager->persist($user);
     }
 }

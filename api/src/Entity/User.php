@@ -10,6 +10,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
@@ -18,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *     denormalizationContext={"groups"={"write"}},
  *     collectionOperations={
  *      "get"={"security"="is_granted('ROLE_RECRUITER')"},
- *      "post"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"}
+ *      "post"
  *     },
  *     itemOperations={
  *      "get"={"security"="is_granted('ROLE_RECRUITER')"}
@@ -26,6 +27,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="`user`")
+ * @UniqueEntity("email", message="Un utilisateur est déjà inscrit avec ce mail")
  */
 class User implements UserInterface
 {
@@ -110,6 +112,12 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Offer", mappedBy="author")
      */
     private $offers;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default":"0"})
+     * @Groups({"read"})
+     */
+    private $isActive = false;
 
     public function __construct()
     {
@@ -331,5 +339,17 @@ class User implements UserInterface
     public function setToken($token)
     {
         $this->token = $token;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
     }
 }
