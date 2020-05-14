@@ -28,6 +28,12 @@ class UserSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * Encode user password when user entity received post request
+     *
+     * @param ViewEvent $event
+     * @return void
+     */
     public function encodePassword(ViewEvent $event): void
     {
         $user = $event->getControllerResult();
@@ -38,5 +44,24 @@ class UserSubscriber implements EventSubscriberInterface
         }
 
         $user->setPassword($this->userPasswordEncoder->encodePassword($user, $user->getPassword()));
+    }
+
+    /**
+     * Send validation email with code and token link to validation account
+     *
+     * @param UserRegisteredEvent $event
+     * @return void
+     */
+    public function sendValidationMail(UserRegisteredEvent $event)
+    {
+        $user = $event->getUser();
+        $email = $user->getEmail();
+        $subject = "Validation de votre inscription sur Oh My Garde";
+
+        $view = $this->twig->render('emails/user/validation.html.twig', [
+            'user' => $user
+        ]);
+
+        $this->mailerService->send($email, $subject, $view);
     }
 }

@@ -79,12 +79,15 @@ function RegisterScreen({ navigation }) {
           />
 
           <View style={{ flexDirection: 'row' }}>
+            <Text>Recruteur</Text>
             <RadioButton
               value="ROLE_RECRUITER"
               color="#600EE6"
               status={role.value === 'ROLE_RECRUITER' ? 'checked' : 'unchecked'}
               onPress={() => setRole({ value: 'ROLE_RECRUITER', error: '' })}
             />
+
+            <Text>Candidat</Text>
             <RadioButton
               value="ROLE_APPLICANT"
               color="#600EE6"

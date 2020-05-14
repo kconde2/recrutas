@@ -6,11 +6,24 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}},
+ *     denormalizationContext={"groups"={"write"}},
+ *     collectionOperations={
+ *      "get"={"security"="is_granted('ROLE_RECRUITER')"},
+ *      "post"={"security"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"}
+ *     },
+ *     itemOperations={
+ *      "get"={"security"="is_granted('ROLE_RECRUITER')"}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="`user`")
  */
@@ -22,47 +35,64 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(message="Votre adresse email est incorrect", mode="strict")
+     * @Assert\NotBlank(message="L'adresse email ne peut être vide")
+     * @Groups({"read", "write"})
      */
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="jsonb", options={"jsonb": true})
+     * @Assert\Choice(callback={"App\Constant\UserRole", "getInvertedRoles"}, multiple=true)
+     * @Assert\NotBlank(message="Vous devez choisissez un role")
+     * @Groups({"read", "write"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string", nullable=true)
+     * @Groups({"write"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le prénom ne peut être vide")
+     * @Assert\Length(min=2, minMessage="Votre prénom est trop court. {{ limit }} caractères ou plus.")
+     * @Groups({"read", "write"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read", "write"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Choice(callback={"App\Constant\UserGender", "getInvertedGenders"}, multiple=false)
+     * @Assert\NotBlank(message="Vous devez choisissez un role")
+     * @Groups({"read", "write"})
      */
     private $gender;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("read")
      */
     private $profileImage;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
      */
     private $address;
 
@@ -302,6 +332,4 @@ class User implements UserInterface
     {
         $this->token = $token;
     }
-
-
 }
