@@ -18,3 +18,9 @@ export const nameValidator = (name) => {
 
   return '';
 };
+
+export const addressValidator = (name) => {
+  if (!name || name.length <= 0) return 'L\'adresse est obligatoire';
+
+  return '';
+};

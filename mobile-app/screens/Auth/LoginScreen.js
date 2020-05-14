@@ -13,7 +13,7 @@ function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: 'a@gmail.com', error: '' });
   const [password, setPassword] = useState({ value: 'a', error: '' });
 
-  const { signIn } = React.useContext(AuthContext);
+  const { actions } = React.useContext(AuthContext);
 
   const _onLoginPressed = () => {
     const emailError = emailValidator(email.value);
@@ -25,7 +25,7 @@ function LoginScreen({ navigation }) {
       return;
     }
 
-    signIn({ email, password })
+    actions.signIn({ email, password })
     // check here
     alert('Logged successfully')
     // navigation.navigate('Dashboard');
