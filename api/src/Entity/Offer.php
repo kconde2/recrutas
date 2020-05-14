@@ -84,7 +84,7 @@ class Offer
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Application", mappedBy="offer")
-     * @Groups({"read_offer", "write_offer"})
+     * @Groups({"read_offer"})
      */
     private $applications;
 
