@@ -17,12 +17,14 @@ import SignUpScreen from './screens/Auth/SignUpScreen';
 import SplashScreen from './screens/SplashScreen';
 import AuthProvider from './context/Auth/AuthProvider';
 import AuthContext from './context/Auth/AuthContext';
+import OfferFormScreen from './screens/Recruiter/OfferFormScreen';
+import OfferScreen from './screens/Recruiter/Offer'
 
 const Stack = createStackNavigator();
 
 function App() {
   return <AuthProvider>
-    <AppContainer />
+    <AppContainer/>
   </AuthProvider>
 }
 
@@ -40,6 +42,8 @@ function AppContainer() {
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Accueil' }} />
             <Stack.Screen name="Details" component={DetailsScreen} />
+            <Stack.Screen name="OfferForm" component={OfferFormScreen} />
+            <Stack.Screen name="Offer" component={OfferScreen} />
           </Stack.Navigator>
         </>
       ) : (
@@ -53,6 +57,5 @@ function AppContainer() {
     </NavigationContainer>
   </>;
 }
-
 
 export default App;

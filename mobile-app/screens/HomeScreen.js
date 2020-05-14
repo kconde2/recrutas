@@ -3,11 +3,11 @@ import { Button, View, Text } from 'react-native';
 
 function HomeScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View>
       <Text>Home Screen</Text>
       <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
+        title="Add offer"
+        onPress={() => navigation.navigate('OfferForm')}
       />
     </View>
   );
