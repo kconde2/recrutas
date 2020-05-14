@@ -31,7 +31,7 @@ class Offer
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read_offer", "write_offer"})
+     * @Groups({"read_offer", "write_offer","read_application"})
      * @Assert\NotBlank(message="Ce champ est obligatoire")
      * @Assert\Length(
      *      min = 2,

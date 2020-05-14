@@ -2,20 +2,27 @@
 
 namespace App\DataPersister;
 
+use App\Entity\User;
+use Twig\Environment;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
-use App\Entity\User;
-use Symfony\Component\Mailer\MailerInterface;
 
 final class UserDataPersister implements ContextAwareDataPersisterInterface
 {
     private $decorated;
     private $mailer;
+    private $twig;
 
-    public function __construct(DataPersisterInterface $decorated, MailerInterface $mailer)
-    {
+    public function __construct(
+        DataPersisterInterface $decorated,
+        MailerInterface $mailer,
+        Environment $twig
+    ) {
         $this->decorated = $decorated;
         $this->mailer = $mailer;
+        $this->twig = $twig;
     }
 
     public function supports($data, array $context = []): bool
@@ -45,8 +52,16 @@ final class UserDataPersister implements ContextAwareDataPersisterInterface
 
     private function sendValidationDeepLink(User $user)
     {
-        // TODO: send
-        // Your welcome email logic...
-        // $this->mailer->send(...);
+        $view = $this->twig->render('emails/user/registered.html.twig', [
+            'user' => $user
+        ]);
+
+        $email = (new Email())
+            ->from($_ENV['APP_EMAIL_FROM'])
+            ->to($user->getEmail())
+            ->subject('Inscription sur Recrutas')
+            ->html($view);
+
+        $this->mailer->send($email);
     }
 }
