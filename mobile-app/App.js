@@ -23,6 +23,7 @@ import ApplicationListProvider from './context/Recruiter/ApplicationListProvider
 import LoginScreen from './screens/Auth/LoginScreen';
 import AppScreen from './screens/AppScreen';
 import ForgotPasswordScreen from './screens/Auth/ForgotPasswordScreen';
+import ValidateAccountInfoScreen from './screens/Auth/ValidateAccountInfoScreen';
 
 const Stack = createStackNavigator();
 
@@ -71,6 +72,7 @@ function AppContainer() {
               <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
               <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
               <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="ValidateAccountInfoScreen" component={ValidateAccountInfoScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
           </>
         )}

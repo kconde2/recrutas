@@ -25,6 +25,7 @@ function RegisterScreen({ navigation }) {
   const [address, setAddress] = useState({ value: '54 Rue de L argent', error: '' });
   const [role, setRole] = useState({ value: 'ROLE_RECRUITER', error: '' });
   const [gender, setGender] = useState({ value: 'M', error: '' });
+  const [loading, setLoading] = useState(false);
 
   const { actions, state } = React.useContext(AuthContext);
 
@@ -44,6 +45,7 @@ function RegisterScreen({ navigation }) {
       return;
     }
 
+    setLoading(true)
     actions.signUp({
       firstname: firstname.value,
       lastname: lastname.value,
@@ -51,12 +53,40 @@ function RegisterScreen({ navigation }) {
       password: password.value,
       roles: [role.value],
       gender: gender.value, address: address.value
+    }).then(() => {
+      setLoading(false)
+
+      navigation.navigate('ValidateAccountInfoScreen');
+    }).catch(errors => {
+      setLoading(false)
+
+      for (let i in errors) {
+        const error = errors[i];
+
+        if (error.propertyPath === 'email') {
+          setEmail({ ...email, error: error.message });
+        }
+
+        if (error.propertyPath === 'firstname') {
+          setFirstname({ ...firstname, error: error.message });
+        }
+
+        if (error.propertyPath === 'lastname') {
+          setLastname({ ...lastname, error: error.message });
+        }
+
+        if (error.propertyPath === 'password') {
+          setPassword({ ...password, error: error.message });
+        }
+
+        if (error.propertyPath === 'address') {
+          setAddress({ ...address, error: error.message });
+        }
+      }
     })
-    console.log(state.isLoading)
-    // navigation.navigate('ValidateAccountInfoScreen');
   };
 
-  if (state.isLoading) {
+  if (loading) {
     return <SplashScreen />;
   }
 

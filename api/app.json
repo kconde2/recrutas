@@ -3,8 +3,8 @@
   "env": {
     "APP_ENV": "prod",
     "APP_SECRET": {"generator": "secret"},
-    "CORS_ALLOW_ORIGIN": "https://pacific-bayou-83330.herokuapp.com/",
-    "TRUSTED_HOSTS": "pacific-bayou-83330.herokuapp.com"
+    "CORS_ALLOW_ORIGIN": "https://lit-garden-51331.herokuapp.com/",
+    "TRUSTED_HOSTS": "lit-garden-51331.herokuapp.com"
   },
   "addons": [
     "heroku-postgresql"

@@ -76,12 +76,13 @@ function AuthProvider(props) {
       },
       signOut: () => dispatch({ type: 'SIGN_OUT' }),
       signUp: async data => {
-        state.isLoading = true;
-
-        register(data).then((user) => {
+        return register(data).then((user) => {
           dispatch({ type: 'SIGN_UP', user });
+          console.log(user, "yes")
+          return Promise.resolve(user)
         }).catch(error => {
-          console.log(error)
+          console.log(error, "no")
+          return Promise.reject(error)
           //  dispatch({ type: 'SIGN_UP_ERROR', message });
         })
       }
