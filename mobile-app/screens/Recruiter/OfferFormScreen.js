@@ -34,7 +34,7 @@ function OfferScreen({ navigation }) {
       mission: field.mission.value,
       startDate: field.startDate.value,
       workplace: field.workplace.value,
-      author: /*TO DO: get author with application storage*/ ''
+      author: /*TO DO: get author with application storage*/ '/users/1'
     })
 
     if(!hasEmptyField){
@@ -44,7 +44,7 @@ function OfferScreen({ navigation }) {
 
   return (
     <SafeAreaView>
-        <ScrollView> 
+        <ScrollView>
           <View>
             <CustomTextInput field={field} setField={setField} attribute="name"/>
             <CustomTextInput field={field} setField={setField} attribute="contratType"/>
