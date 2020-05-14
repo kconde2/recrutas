@@ -4,7 +4,8 @@ import Header from '../../components/Header';
 import Button from '../../components/Button';
 import Paragraph from '../../components/Paragraph';
 
-function ValidateAccountInfoScreen({ navigation }) {
+function ConfirmAccountInfoScreen({ navigation }) {
+
   return <Background>
     <Header>Valider votre compte.</Header>
 
@@ -23,4 +24,4 @@ function ValidateAccountInfoScreen({ navigation }) {
   </Background>
 };
 
-export default memo(ValidateAccountInfoScreen);
+export default memo(ConfirmAccountInfoScreen);

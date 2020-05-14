@@ -2,6 +2,7 @@ import * as React from 'react';
 import AsyncStorage from '@react-native-community/async-storage'
 import AuthContext from './AuthContext';
 import register from '../../api/auth/register';
+import activateAccount from '../../api/auth/activate-account';
 
 const authReducer = (prevState, action) => {
   switch (action.type) {
@@ -78,12 +79,16 @@ function AuthProvider(props) {
       signUp: async data => {
         return register(data).then((user) => {
           dispatch({ type: 'SIGN_UP', user });
-          console.log(user, "yes")
           return Promise.resolve(user)
         }).catch(error => {
-          console.log(error, "no")
           return Promise.reject(error)
-          //  dispatch({ type: 'SIGN_UP_ERROR', message });
+        })
+      },
+      activateAccount: async token => {
+        return activateAccount(token).then((user) => {
+          return Promise.resolve(user)
+        }).catch(error => {
+          return Promise.reject(error)
         })
       }
     }),

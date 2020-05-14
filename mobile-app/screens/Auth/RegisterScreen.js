@@ -20,14 +20,14 @@ import SplashScreen from '../SplashScreen';
 function RegisterScreen({ navigation }) {
   const [firstname, setFirstname] = useState({ value: 'Kaba', error: '' });
   const [lastname, setLastname] = useState({ value: 'CONDE', error: '' });
-  const [email, setEmail] = useState({ value: 'kabaconde2@gmail.com', error: '' });
+  const [email, setEmail] = useState({ value: 'kfc590@gmail.com', error: '' });
   const [password, setPassword] = useState({ value: 'kabaconde', error: '' });
   const [address, setAddress] = useState({ value: '54 Rue de L argent', error: '' });
   const [role, setRole] = useState({ value: 'ROLE_RECRUITER', error: '' });
   const [gender, setGender] = useState({ value: 'M', error: '' });
   const [loading, setLoading] = useState(false);
 
-  const { actions, state } = React.useContext(AuthContext);
+  const { actions } = React.useContext(AuthContext);
 
   const _onSignUpPressed = () => {
     const firstnameError = nameValidator(firstname.value);
@@ -56,7 +56,7 @@ function RegisterScreen({ navigation }) {
     }).then(() => {
       setLoading(false)
 
-      navigation.navigate('ValidateAccountInfoScreen');
+      navigation.navigate('ConfirmAccountInfoScreen');
     }).catch(errors => {
       setLoading(false)
 
