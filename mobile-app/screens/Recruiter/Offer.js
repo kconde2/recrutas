@@ -6,10 +6,6 @@ import AffectApplicant from './Offer/AffectApplicant'
 function OfferScreen(props) {
   const field = props.route.params
 
-  function openAffectModal(){
-
-  }
-
   return (
     <View>
         {Object.keys(field).map(key => {
@@ -22,8 +18,11 @@ function OfferScreen(props) {
             <Divider />
             </>)
         })}
+                <View style={{flexDirection:"row"}}>
+          <Button style={{backgroundColor:"#fff",margin:10}} icon="camera" mode="outlined" onPress={() => props.navigation.navigate('Offer',field)}>Modifier</Button>
+          <Button style={{backgroundColor:"#fff",margin:10}} icon="camera" mode="outlined" onPress={() => console.log('Pressed')}>Supprimer</Button>
+        </View>
         <AffectApplicant/>
-        <Button style={{margin:10,padding:15}} icon="camera" mode="contained" onPress={() => {openAffectModal()}}>Affecter un candidat</Button>
     </View>
     )
 }

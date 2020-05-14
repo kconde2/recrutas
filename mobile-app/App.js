@@ -23,6 +23,7 @@ import OfferScreen from './screens/Recruiter/Offer'
 import RecruiterApplicationListScreen from './screens/Recruiter/Applications/ApplicationListScreen';
 import RecruiterAccountScreen from './screens/Recruiter/AccountScreen';
 import ApplicationListProvider from './context/Recruiter/ApplicationListProvider';
+import RecruiterProvider from './context/Recruiter/RecruiterProvider'
 import LoginScreen from './screens/Auth/LoginScreen';
 import AppScreen from './screens/AppScreen';
 import ForgotPasswordScreen from './screens/Auth/ForgotPasswordScreen';
@@ -32,9 +33,11 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <AuthProvider>
+      <RecruiterProvider>
       <ApplicationListProvider>
         <AppContainer />
       </ApplicationListProvider>
+      </RecruiterProvider>
     </AuthProvider>
   );
 }
