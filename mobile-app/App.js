@@ -23,6 +23,7 @@ import ApplicationListProvider from './context/Recruiter/ApplicationListProvider
 import LoginScreen from './screens/Auth/LoginScreen';
 import AppScreen from './screens/AppScreen';
 import ForgotPasswordScreen from './screens/Auth/ForgotPasswordScreen';
+import ApplicantApplicationProvider from './context/Applicant/ApplicationListProvider';
 
 const Stack = createStackNavigator();
 
@@ -30,7 +31,9 @@ function App() {
   return (
     <AuthProvider>
       <ApplicationListProvider>
-        <AppContainer />
+        <ApplicantApplicationProvider>
+          <AppContainer />
+        </ApplicantApplicationProvider>
       </ApplicationListProvider>
     </AuthProvider>
   );
