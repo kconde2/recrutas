@@ -32,7 +32,7 @@ function RegisterScreen({ navigation }) {
       return;
     }
 
-    navigation.navigate('Dashboard');
+    navigation.navigate('Home');
   };
 
   return (

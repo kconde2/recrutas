@@ -18,9 +18,7 @@ function OfferScreen({ navigation }) {
   });
 
   function handleSubmit(){
-
     var hasEmptyField = false;
-
 
     Object.keys(field).map(key => {
       if(field[key].value == ''){
@@ -29,11 +27,18 @@ function OfferScreen({ navigation }) {
       }else field[key].error = false;
     })
 
-    if (!hasEmptyField){
+    actions.createOffer({
+      name:field.name.value,
+      contratType: field.contratType.value,
+      companyDetails: field.companyDetails.value,
+      mission: field.mission.value,
+      startDate: field.startDate.value,
+      workplace: field.workplace.value,
+    })
+
+    if(!hasEmptyField){
       navigation.navigate('Offer',field)
     }
-
-    /*actions.createOffer()*/
   }
 
   return (

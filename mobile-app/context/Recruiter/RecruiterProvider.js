@@ -25,8 +25,8 @@ function RecruiterProvider(props) {
 
   const actions = React.useMemo(
     () => ({
-      createOffer: async () => {
-        const offer = await recruiterApi.createOffer();
+      createOffer: async (form) => {
+        const offer = await recruiterApi.createOffer(form);
         if(1/*a ete enregistré*/){
             dispatch({type: 'SAVE_OFFER'});
         }

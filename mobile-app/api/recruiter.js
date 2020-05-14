@@ -1,26 +1,19 @@
 export default {
-    createOffer() {
+    createOffer(form) {
         return fetch('https://localhost:8443/offers', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            "name": "string",
-            "companyDetails": "string",
-            "description": "string",
-            "startAt": "2020-05-14T21:26:52.417Z",
-            "contratType": "string",
-            "workplace": "string",
-             "applications": [],
-             "author": "string"
-        })
+        body: JSON.stringify(
+            form
+        )
     })
       .then(function(data) {
         return data.json();
       })
       .then(app => Promise.resolve(app))
-      .catch(error => console.log(error));
+      .catch(error => Promise.reject(error));
     },
     }
   
