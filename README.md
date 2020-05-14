@@ -1,13 +1,18 @@
 # Recrutas
 
+## Install
+
+```shell
+docker-compose exec php composer install
+docker-compose exec php bin/console doctrine:database:drop --force
+docker-compose exec php bin/console doctrine:database:create
+docker-compose exec php bin/console doctrine:migrations:migrate --no-interaction
+```
+
 ## Fixtures
 
 ```shell
-docker-compose exec php composer require --dev doctrine/doctrine-fixtures-bundle
-```
-
-```shell
-docker-compose exec php bin/console doctrine:fixtures:load
+docker-compose exec php bin/console doctrine:fixtures:load --no-interaction
 ```
 
 ## Emulator
