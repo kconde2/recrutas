@@ -14,6 +14,11 @@ function HomeScreen({ navigation }) {
         title="Recruiter space"
         onPress={() => navigation.navigate('RecruiterAccount')}
       />
+
+      <Button
+        title="Add offer"
+        onPress={() => navigation.navigate('OfferForm')}
+      />    
     </View>
   </Background>
 }

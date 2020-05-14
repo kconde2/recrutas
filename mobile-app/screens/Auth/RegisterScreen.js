@@ -18,13 +18,13 @@ import AuthContext from '../../context/Auth/AuthContext';
 import SplashScreen from '../SplashScreen';
 
 function RegisterScreen({ navigation }) {
-  const [firstname, setFirstname] = useState({ value: 'Kaba', error: '' });
-  const [lastname, setLastname] = useState({ value: 'CONDE', error: '' });
-  const [email, setEmail] = useState({ value: 'kfc590@gmail.com', error: '' });
-  const [password, setPassword] = useState({ value: 'kabaconde', error: '' });
-  const [address, setAddress] = useState({ value: '54 Rue de L argent', error: '' });
-  const [role, setRole] = useState({ value: 'ROLE_RECRUITER', error: '' });
-  const [gender, setGender] = useState({ value: 'M', error: '' });
+  const [firstname, setFirstname] = useState({ value: '', error: '' });
+  const [lastname, setLastname] = useState({ value: '', error: '' });
+  const [email, setEmail] = useState({ value: '', error: '' });
+  const [password, setPassword] = useState({ value: '', error: '' });
+  const [address, setAddress] = useState({ value: '', error: '' });
+  const [role, setRole] = useState({ value: '', error: '' });
+  const [gender, setGender] = useState({ value: '', error: '' });
   const [loading, setLoading] = useState(false);
 
   const { actions } = React.useContext(AuthContext);

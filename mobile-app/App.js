@@ -6,6 +6,7 @@
  * @flow strict-local
  */
 
+
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -15,9 +16,12 @@ import RegisterScreen from './screens/Auth/RegisterScreen';
 import SplashScreen from './screens/SplashScreen';
 import AuthProvider from './context/Auth/AuthProvider';
 import AuthContext from './context/Auth/AuthContext';
+import OfferFormScreen from './screens/Recruiter/OfferFormScreen';
+import OfferScreen from './screens/Recruiter/Offer'
 import RecruiterApplicationListScreen from './screens/Recruiter/Applications/ApplicationListScreen';
 import RecruiterAccountScreen from './screens/Recruiter/AccountScreen';
 import ApplicationListProvider from './context/Recruiter/ApplicationListProvider';
+import RecruiterProvider from './context/Recruiter/RecruiterProvider'
 import LoginScreen from './screens/Auth/LoginScreen';
 import AppScreen from './screens/AppScreen';
 import ForgotPasswordScreen from './screens/Auth/ForgotPasswordScreen';
@@ -35,11 +39,13 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <AuthProvider>
-      <ApplicationListProvider>
-        <ApplicantApplicationProvider>
-          <AppContainer />
-        </ApplicantApplicationProvider>
-      </ApplicationListProvider>
+      <RecruiterProvider>
+        <ApplicationListProvider>
+          <ApplicantApplicationProvider>
+            <AppContainer />
+          </ApplicantApplicationProvider>
+        </ApplicationListProvider>
+      </RecruiterProvider>
     </AuthProvider>
   );
 }
@@ -63,11 +69,12 @@ function AppContainer() {
       {isAuthenticated() ? (
         <>
           <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="ListApplications" component={ListApplications} options={{ title: 'List Applications' }} />
+            <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Accueil' }} />
+            <Stack.Screen name="ListApplications" component={ListApplications} options={{ title: 'List Applications' }} />
             <Stack.Screen name="DetailApplications" component={DetailApplications} options={{ title: 'Detail Applications' }} />
             <Stack.Screen name="ListApplicationsAccepted" component={ListApplicationsAccepted} options={{ title: 'List Applications Accepted' }} />
             <Stack.Screen name="DetailApplicationsAccepted" component={DetailApplicationsAccepted} options={{ title: 'Detail Applications Accepted' }} />
-            <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Accueil' }} />
+
             <Stack.Screen name="Details" component={DetailsScreen} />
             <Stack.Screen
               name="RecruiterApplicationList"
@@ -79,6 +86,8 @@ function AppContainer() {
               component={RecruiterAccountScreen}
               options={{ title: 'Recruiter account' }}
             />
+            <Stack.Screen name="OfferForm" component={OfferFormScreen} />
+            <Stack.Screen name="Offer" component={OfferScreen} />
           </Stack.Navigator>
         </>
       ) : (
@@ -96,5 +105,6 @@ function AppContainer() {
     </NavigationContainer>
   </>;
 }
+
 
 export default App;
