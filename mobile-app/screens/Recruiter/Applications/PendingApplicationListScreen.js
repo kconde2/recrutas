@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import ApplicationListContext from '../../../context/Recruiter/ApplicationListContext';
 
-function ApplicationListScreen({ navigation }) {
+function PendingApplicationListScreen({ navigation }) {
   const { state, actions } = React.useContext(ApplicationListContext);
 
   React.useEffect(() => {
@@ -13,8 +13,10 @@ function ApplicationListScreen({ navigation }) {
   let options = []
   state.applications.forEach(offer => {
     offer.applications.forEach(application => {
-      application = { ...application, offerName: offer.name, contractType: offer.contratType };
-      options.push(application)
+      if (application.status === 'opened') {
+        application = { ...application, offerName: offer.name, contractType: offer.contratType };
+        options.push(application)
+      }
     })
   });
 
@@ -67,4 +69,4 @@ function ApplicationListScreen({ navigation }) {
   );
 }
 
-export default ApplicationListScreen;
+export default PendingApplicationListScreen;

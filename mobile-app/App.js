@@ -18,8 +18,10 @@ import SplashScreen from './screens/SplashScreen';
 import AuthProvider from './context/Auth/AuthProvider';
 import AuthContext from './context/Auth/AuthContext';
 import RecruiterApplicationListScreen from './screens/Recruiter/Applications/ApplicationListScreen';
+import RecruiterApplicationDetailsScreen from './screens/Recruiter/Applications/ApplicationScreen';
+import RecruiterPendingApplicationList from './screens/Recruiter/Applications/PendingApplicationListScreen';
 import RecruiterAccountScreen from './screens/Recruiter/AccountScreen';
-import ApplicationListProvider from './context/Recruiter/ApplicationListProvider';
+import RecruiterApplicationListProvider from './context/Recruiter/ApplicationListProvider';
 import LoginScreen from './screens/Auth/LoginScreen';
 import AppScreen from './screens/AppScreen';
 import ForgotPasswordScreen from './screens/Auth/ForgotPasswordScreen';
@@ -29,9 +31,9 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <AuthProvider>
-      <ApplicationListProvider>
+      <RecruiterApplicationListProvider>
         <AppContainer />
-      </ApplicationListProvider>
+      </RecruiterApplicationListProvider>
     </AuthProvider>
   );
 }
@@ -43,39 +45,77 @@ function AppContainer() {
     return <SplashScreen />;
   }
 
-  return <>
-    <NavigationContainer>
-      {isAuthenticated() ? (
-        <>
-          <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="ListApplications" component={ListApplications} />
-            <Stack.Screen name="DetailApplications" component={DetailApplications} />
-            <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Accueil' }} />
-            <Stack.Screen name="Details" component={DetailsScreen} />
-            <Stack.Screen
-              name="RecruiterApplicationList"
-              component={RecruiterApplicationListScreen}
-              options={{ title: 'All applications' }}
-            />
-            <Stack.Screen
-              name="RecruiterAccount"
-              component={RecruiterAccountScreen}
-              options={{ title: 'Recruiter account' }}
-            />
-          </Stack.Navigator>
-        </>
-      ) : (
+  return (
+    <>
+      <NavigationContainer>
+        {isAuthenticated() ? (
           <>
-            <Stack.Navigator initialRouteName="AppScreen">
-              <Stack.Screen name="AppScreen" component={AppScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+            <Stack.Navigator initialRouteName="Home">
+              <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ title: 'Accueil' }}
+              />
+              <Stack.Screen
+                name="ListApplications"
+                component={ListApplications}
+              />
+              <Stack.Screen
+                name="DetailApplications"
+                component={DetailApplications}
+              />
+              <Stack.Screen name="Details" component={DetailsScreen} />
+              <Stack.Screen
+                name="RecruiterApplicationList"
+                component={RecruiterApplicationListScreen}
+                options={{ title: 'All applications' }}
+              />
+              <Stack.Screen
+                name="RecruiterPendingApplicationList"
+                component={RecruiterPendingApplicationList}
+                options={{ title: 'All applications' }}
+              />
+              <Stack.Screen
+                name="RecruiterApplicationDetails"
+                component={RecruiterApplicationDetailsScreen}
+                options={{ title: 'Aplication\'s details' }}
+              />
+              <Stack.Screen
+                name="RecruiterAccount"
+                component={RecruiterAccountScreen}
+                options={{ title: 'Recruiter account' }}
+              />
             </Stack.Navigator>
           </>
-        )}
-    </NavigationContainer>
-  </>;
+        ) : (
+            <>
+              <Stack.Navigator initialRouteName="AppScreen">
+                <Stack.Screen
+                  name="AppScreen"
+                  component={AppScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="LoginScreen"
+                  component={LoginScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="RegisterScreen"
+                  component={RegisterScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="ForgotPasswordScreen"
+                  component={ForgotPasswordScreen}
+                  options={{ headerShown: false }}
+                />
+              </Stack.Navigator>
+            </>
+          )}
+      </NavigationContainer>
+    </>
+  );
 }
 
 export default App;

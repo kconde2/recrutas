@@ -1,14 +1,22 @@
 import * as React from 'react';
-import {Button, View, Text} from 'react-native';
+import { StyleSheet, Button, View, Text } from 'react-native';
 
-function AccountScreen({navigation}) {
+function AccountScreen({ navigation }) {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Account</Text>
-      <Button
-        title="All applications"
-        onPress={() => navigation.navigate('RecruiterApplicationList')}
-      />
+      <View style={{ flexDirection: "row", justifyContent: 'space-between' }}>
+        <Button
+          style={{ marginRight: '10%' }}
+          title="All applications"
+          onPress={() => navigation.navigate('RecruiterApplicationList')}
+        />
+
+        <Button
+          title="Pending application"
+          onPress={() => navigation.navigate('RecruiterPendingApplicationList')}
+        />
+      </View>
     </View>
   );
 }
