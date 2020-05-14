@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Constant\ApplicationStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read_application"}},
+ *     denormalizationContext={"groups"={"write_application"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ApplicationRepository")
  */
 class Application
@@ -24,6 +28,7 @@ class Application
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="applications")
+     * @Groups({"read_offer","read_application","write_application"})
      */
     private $applicant;
 
@@ -34,26 +39,31 @@ class Application
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"read_offer"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read_offer"})
      */
     private $motivation;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"read_offer"})
      */
     private $wage;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read_offer"})
      */
     private $resume;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read_offer"})
      */
     private $status = ApplicationStatus::STATUS_CREATED;
 
