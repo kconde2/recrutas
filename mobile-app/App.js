@@ -10,8 +10,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
-import ListApplications from './screens/ListApplications';
-import DetailApplications from './screens/DetailApplications';
+import DetailApplicationsAccepted from './screens/DetailApplicationsAccepted';
 import DetailsScreen from './screens/DetailScreen';
 import RegisterScreen from './screens/Auth/RegisterScreen';
 import SplashScreen from './screens/SplashScreen';
@@ -24,6 +23,7 @@ import LoginScreen from './screens/Auth/LoginScreen';
 import AppScreen from './screens/AppScreen';
 import ForgotPasswordScreen from './screens/Auth/ForgotPasswordScreen';
 import ApplicantApplicationProvider from './context/Applicant/ApplicationListProvider';
+import ListApplicationsAccepted from './screens/ListApplicationsAccepted';
 
 const Stack = createStackNavigator();
 
@@ -51,8 +51,8 @@ function AppContainer() {
       {isAuthenticated() ? (
         <>
           <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="ListApplications" component={ListApplications} />
-            <Stack.Screen name="DetailApplications" component={DetailApplications} />
+            <Stack.Screen name="ListApplicationsAccepted" component={ListApplicationsAccepted} options={{ title: 'List Applications Accepted' }} />
+            <Stack.Screen name="DetailApplicationsAccepted" component={DetailApplicationsAccepted} options={{ title: 'Detail Applications Accepted' }} />
             <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Accueil' }} />
             <Stack.Screen name="Details" component={DetailsScreen} />
             <Stack.Screen

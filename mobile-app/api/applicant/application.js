@@ -1,6 +1,6 @@
 export default {
     getAll() {
-      return fetch('https://localhost:8443/applications', {
+      return fetch('https://localhost:8443/applications?properties[]=status&status=accepted&properties[]=age&properties[]=motivation&properties[]=wage&properties[]=resume&properties[offer][]=name&applicant=21', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

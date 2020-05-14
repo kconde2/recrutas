@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Constant\ApplicationStatus;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,6 +17,8 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *     denormalizationContext={"groups"={"write_application"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ApplicationRepository")
+ * @ApiFilter(PropertyFilter::class, arguments={"parameterName": "properties", "overrideDefaultProperties": false})
+ * @ApiFilter(SearchFilter::class, properties={"status": "exact","applicant":"exact","offer":"exact"})
  */
 class Application
 {
@@ -34,36 +39,37 @@ class Application
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Offer", inversedBy="applications")
+     * @Groups({"read_offer","read_application"})
      */
     private $offer;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $motivation;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $wage;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $resume;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $status = ApplicationStatus::STATUS_CREATED;
 
