@@ -54,8 +54,6 @@ function AppContainer() {
       {isAuthenticated() ? (
         <>
           <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="ListApplications" component={ListApplications} />
-            <Stack.Screen name="DetailApplications" component={DetailApplications} />
             <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Accueil' }} />
             <Stack.Screen name="Details" component={DetailsScreen} />
             <Stack.Screen
