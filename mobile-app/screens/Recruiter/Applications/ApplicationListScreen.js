@@ -1,22 +1,16 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
-import { DataTable } from 'react-native-paper';
+import React, {Component} from 'react';
+import {View} from 'react-native';
+import {DataTable} from 'react-native-paper';
 import ApplicationListContext from '../../../context/Recruiter/ApplicationListContext';
 
-function ApplicationListScreen({ navigation }) {
+function ApplicationListScreen({navigation}) {
   const [applications, setApplications] = React.useState({});
-  const { actions } = React.useContext(ApplicationListContext);
+  const {state, actions} = React.useContext(ApplicationListContext);
 
-  React.useEffect(async () => {
-    // actions.getAll().then(response => console.log(response));
-    // // .then(data => console.log(data));
-    let response = await fetch('https://localhost:8443/offers?page=1', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    console.log(response)
+  React.useEffect(() => {
+    actions.getAll().then(response => {
+      console.log(state.applications);
+    });
   }, []);
 
   return (

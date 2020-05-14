@@ -5,3 +5,4 @@
 node_modules/
 vendor/
 client/localCA.crt
+.DS_Store

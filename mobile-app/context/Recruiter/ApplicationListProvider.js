@@ -32,6 +32,7 @@ function ApplicationListProvider(props) {
     () => ({
       getAll: async () => {
         const applications = await Api.getAll();
+        console.log('ici', applications);
         dispatch({
           type: 'ALL',
           applications,
