@@ -93,7 +93,7 @@ const ListApplications = ({ navigation }) => {
 
 
   return (
-        <DataTable style={styles.container}>
+    <DataTable style={styles.container}>
         <DataTable.Header style = {styles.color_weight}>
           <DataTable.Title  style = {styles.color_weight}>Resume</DataTable.Title>
           <DataTable.Title  style = {styles.color_weight}>Age</DataTable.Title>
