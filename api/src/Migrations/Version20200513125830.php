@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200513082312 extends AbstractMigration
+final class Version20200513125830 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,9 +22,9 @@ final class Version20200513082312 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('ALTER TABLE offer ADD author_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE offer ADD CONSTRAINT FK_29D6873EF675F31B FOREIGN KEY (author_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('CREATE INDEX IDX_29D6873EF675F31B ON offer (author_id)');
+        $this->addSql('ALTER TABLE "user" ADD token VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE "user" ALTER password DROP NOT NULL');
+        $this->addSql('ALTER TABLE "user" ALTER address DROP NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -33,8 +33,8 @@ final class Version20200513082312 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('ALTER TABLE offer DROP CONSTRAINT FK_29D6873EF675F31B');
-        $this->addSql('DROP INDEX IDX_29D6873EF675F31B');
-        $this->addSql('ALTER TABLE offer DROP author_id');
+        $this->addSql('ALTER TABLE "user" DROP token');
+        $this->addSql('ALTER TABLE "user" ALTER password SET NOT NULL');
+        $this->addSql('ALTER TABLE "user" ALTER address SET NOT NULL');
     }
 }
