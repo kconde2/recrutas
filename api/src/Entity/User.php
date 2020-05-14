@@ -68,13 +68,13 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le prénom ne peut être vide")
      * @Assert\Length(min=2, minMessage="Votre prénom est trop court. {{ limit }} caractères ou plus.")
-     * @Groups({"read", "write"})
+     * @Groups({"read", "write","read_application","read_offer"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read", "write"})
+     * @Groups({"read", "write","read_application","read_offer"})
      */
     private $lastname;
 
@@ -82,7 +82,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\Choice(callback={"App\Constant\UserGender", "getInvertedGenders"}, multiple=false)
      * @Assert\NotBlank(message="Vous devez choisissez un role")
-     * @Groups({"read", "write"})
+     * @Groups({"read", "write","read_application","read_offer"})
      */
     private $gender;
 
