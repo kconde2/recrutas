@@ -4,7 +4,6 @@ namespace App\Constant;
 
 class ContractType
 {
-
     const TYPE_CDI = 'cdi';
     const TYPE_CDD = 'cdd';
     const TYPE_APPRENTICE = 'apprentice';

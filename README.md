@@ -1,12 +1,16 @@
 # Recrutas
 
-### Fixtures
+## Fixtures
 
-> docker-compose exec php composer require --dev doctrine/doctrine-fixtures-bundle
+```shell
+docker-compose exec php composer require --dev doctrine/doctrine-fixtures-bundle
+```
 
-> docker-compose exec php bin/console doctrine:fixtures:load
+```shell
+docker-compose exec php bin/console doctrine:fixtures:load
+```
 
-### Emulator
+## Emulator
 
 - Check `instructions-ssl.txt` file then :
 

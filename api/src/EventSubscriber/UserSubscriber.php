@@ -15,19 +15,30 @@ class UserSubscriber implements EventSubscriberInterface
 {
     private $userPasswordEncoder;
 
+    private $entityManager;
+
     public function __construct(
-        UserPasswordEncoderInterface $userPasswordEncoder
+        UserPasswordEncoderInterface $userPasswordEncoder,
+        EntityManagerInterface $entityManager
     ) {
         $this->userPasswordEncoder = $userPasswordEncoder;
+
+        $this->entityManager = $entityManager;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['encodePassword', EventPriorities::POST_WRITE],
+            KernelEvents::VIEW => ['encodePassword', EventPriorities::PRE_WRITE],
         ];
     }
 
+    /**
+     * Encode user password when user entity received post request
+     *
+     * @param ViewEvent $event
+     * @return void
+     */
     public function encodePassword(ViewEvent $event): void
     {
         $user = $event->getControllerResult();
@@ -38,5 +49,6 @@ class UserSubscriber implements EventSubscriberInterface
         }
 
         $user->setPassword($this->userPasswordEncoder->encodePassword($user, $user->getPassword()));
+        $this->entityManager->persist($user);
     }
 }

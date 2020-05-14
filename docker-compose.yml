@@ -148,6 +148,12 @@ services:
       ports:
           - 9000:9000
 
+  maildev:
+      image: djfarrelly/maildev
+      command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+      container_name: recrutas-maildev
+      ports:
+          - 1080:80
 volumes:
   db-data: {}
   dev-certs: {}

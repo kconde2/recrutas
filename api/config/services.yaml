@@ -29,3 +29,7 @@ services:
         decorates: 'api_platform.swagger.normalizer.documentation'
         arguments: ['@App\Swagger\SwaggerDecorator.inner']
         autoconfigure: false
+
+    # Data Persister
+    App\DataPersister\UserDataPersister:
+        decorates: 'api_platform.doctrine.orm.data_persister'
