@@ -34,6 +34,7 @@ function OfferScreen({ navigation }) {
       mission: field.mission.value,
       startDate: field.startDate.value,
       workplace: field.workplace.value,
+      author: /*TO DO: get author with application storage*/ ''
     })
 
     if(!hasEmptyField){
