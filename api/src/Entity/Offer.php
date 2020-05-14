@@ -3,12 +3,18 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read_offer"}},
+ *     denormalizationContext={"groups"={"write_offer"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\OfferRepository")
  */
 class Offer
@@ -19,46 +25,72 @@ class Offer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read_offer"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read_offer", "write_offer"})
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Ce champ doit faire au moins {{ limit }} caractères",
+     *      maxMessage = "Ce champ ne doit pas excéder {{ limit }} caractères",
+     *      allowEmptyString = false
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"read_offer", "write_offer"})
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      */
     private $companyDetails;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"read_offer", "write_offer"})
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"read_offer", "write_offer"})
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      */
     private $startAt;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read_offer", "write_offer"})
+     * @Assert\NotNull(message="Ce champ est obligatoire")
+     * @Assert\Choice(
+     *     choices = { "cdi", "cdd", "apprentice", "interim" },
+     *     message = "Choisissez un type de contrat valide."
+     * )
      */
     private $contratType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read_offer", "write_offer"})
+     * @Assert\NotNull(message="Ce champ est obligatoire")
      */
     private $workplace;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Application", mappedBy="offer")
+     * @Groups({"read_offer", "write_offer"})
      */
     private $applications;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="offers")
+     * @Groups({"read_offer", "write_offer"})
      */
     private $author;
 
