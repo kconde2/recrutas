@@ -14,3 +14,5 @@ api_platform:
     # Mercure integration, remove if unwanted
     mercure:
         hub_url: "%env(MERCURE_SUBSCRIBE_URL)%"
+    eager_loading:
+        force_eager: false
