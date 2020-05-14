@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Controller\ActivateUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -22,7 +23,22 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      "post"
  *     },
  *     itemOperations={
- *      "get"={"security"="is_granted('ROLE_RECRUITER')"}
+ *      "get"={"security"="is_granted('ROLE_RECRUITER')"},
+ *      "activate"={
+ *        "method"="POST",
+ *            "path"="/users/{token}/activate",
+ *            "controller"=ActivateUser::class,
+ *            "defaults"={"_api_receive"=false},
+ *            "openapi_context"={
+ *               "parameters"={
+ *                 "name": "token",
+ *                 "in": "path",
+ *                 "type": "string",
+ *                 "required": true
+ *               }
+ *            },
+ *           "normalization_context"={"groups"={"activate"}},
+ *       }
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -100,6 +116,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"activate"})
      */
     private $token;
 

@@ -23,6 +23,8 @@ import ApplicationListProvider from './context/Recruiter/ApplicationListProvider
 import LoginScreen from './screens/Auth/LoginScreen';
 import AppScreen from './screens/AppScreen';
 import ForgotPasswordScreen from './screens/Auth/ForgotPasswordScreen';
+import ConfirmAccountInfoScreen from './screens/Auth/ConfirmAccountInfoScreen';
+import ActivateAccountScreen from './screens/Auth/ActivateAccountScreen';
 
 const Stack = createStackNavigator();
 
@@ -38,13 +40,20 @@ function App() {
 
 function AppContainer() {
   const { state, isAuthenticated } = React.useContext(AuthContext);
+  const linking = {
+    prefixes: ['https://myapp.com', 'myapp://'],
+    config: {
+      ActivateAccountScreen: 'validate/:token',
+      LoginScreen: 'account/login',
+    },
+  };
 
   if (state.isLoading) {
     return <SplashScreen />;
   }
 
   return <>
-    <NavigationContainer>
+    <NavigationContainer linking={linking} fallback={<SplashScreen />}>
       {isAuthenticated() ? (
         <>
           <Stack.Navigator initialRouteName="Home">
@@ -71,6 +80,8 @@ function AppContainer() {
               <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
               <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
               <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="ConfirmAccountInfoScreen" component={ConfirmAccountInfoScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="ActivateAccountScreen" component={ActivateAccountScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
           </>
         )}
