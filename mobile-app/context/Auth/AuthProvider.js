@@ -1,6 +1,7 @@
 import * as React from 'react';
 import AsyncStorage from '@react-native-community/async-storage'
 import AuthContext from './AuthContext';
+import register from '../../api/auth/register';
 
 const authReducer = (prevState, action) => {
   switch (action.type) {
@@ -16,6 +17,12 @@ const authReducer = (prevState, action) => {
         isSignout: false,
         userToken: action.token,
       };
+    case 'SIGN_UP':
+      return {
+        ...prevState,
+        isLoading: false,
+        user: action.user,
+      };
     case 'SIGN_OUT':
       return {
         ...prevState,
@@ -29,6 +36,7 @@ const initialState = {
   isLoading: true,
   isSignout: false,
   userToken: null,
+  user: null
 }
 
 function AuthProvider(props) {
@@ -56,7 +64,7 @@ function AuthProvider(props) {
     bootstrapAsync();
   }, []);
 
-  const authContext = React.useMemo(
+  const actions = React.useMemo(
     () => ({
       signIn: async data => {
         // In a production app, we need to send some data (usually username, password) to server and get a token
@@ -68,12 +76,14 @@ function AuthProvider(props) {
       },
       signOut: () => dispatch({ type: 'SIGN_OUT' }),
       signUp: async data => {
-        // In a production app, we need to send user data to server and get a token
-        // We will also need to handle errors if sign up failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
+        state.isLoading = true;
 
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        register(data).then((user) => {
+          dispatch({ type: 'SIGN_UP', user });
+        }).catch(error => {
+          console.log(error)
+          //  dispatch({ type: 'SIGN_UP_ERROR', message });
+        })
       }
     }),
     []
@@ -84,7 +94,7 @@ function AuthProvider(props) {
   };
 
   return <>
-    <AuthContext.Provider value={{ state, dispatch, ...authContext, isAuthenticated }}>
+    <AuthContext.Provider value={{ state, dispatch, actions, isAuthenticated }}>
       {props.children}
     </AuthContext.Provider>
   </>
