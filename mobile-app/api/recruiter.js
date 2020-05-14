@@ -5,9 +5,7 @@ export default {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(
-            form
-        )
+        body: JSON.stringify(form)
     })
       .then(function(data) {
         return data.json();

@@ -6,7 +6,7 @@ function AffectApplicant(){
   const [visible,setVisible] = React.useState(false)
 
   function affectApplicant(){
-    /*checkIfUserEmailExist
+    /*TO DO: checkIfUserEmailExist
       If exist -> send mail and affect him in databse
       If not exist -> send mail to register on app and add offer on his list
     */
