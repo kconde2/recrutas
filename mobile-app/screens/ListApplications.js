@@ -4,17 +4,18 @@ import { DataTable} from 'react-native-paper';
 import ApplicationListContext from '../context/Applicant/ApplicationContext';
 
 
-const ListApplicationsAccepted = ({ navigation }) => {
+const ListApplications = ({ navigation }) => {
 
   const {state, actions} = React.useContext(ApplicationListContext);
    
   React.useEffect(() => {
-    actions.getAllAccepted().then(() => {
+    actions.getAll().then(() => {
       console.log(state.applications);
     });
   }, []);
 
   console.log(state.applications);
+
   return (
     <SafeAreaView>
       <ScrollView >
@@ -23,18 +24,23 @@ const ListApplicationsAccepted = ({ navigation }) => {
           <DataTable.Title  style = {styles.color_weight}>Offer</DataTable.Title>
           <DataTable.Title  style = {styles.color_weight}>Age</DataTable.Title>
           <DataTable.Title  style = {styles.color_weight}>Motivation</DataTable.Title>
+          <DataTable.Title  style = {styles.color_weight}>Status</DataTable.Title>
           <DataTable.Title  style = {styles.color_weight} numeric>Wage</DataTable.Title>
         </DataTable.Header>
           {
                 state.applications.map((item, index) => (
-          <DataTable.Row key = {index} style={styles.background_row}  onPress={() => navigation.navigate('DetailApplicationsAccepted', {
-            itemId: item.id,offer: item.offer.name, resume: item.resume,age: item.age,wage: item.wage,motivation: item.motivation,
-          })}>
-            <DataTable.Cell >{item.offer.name}</DataTable.Cell>
-            <DataTable.Cell>{item.age}</DataTable.Cell>
-            <DataTable.Cell>{item.motivation}</DataTable.Cell>
-            <DataTable.Cell numeric>{item.wage}</DataTable.Cell>
-          </DataTable.Row>
+
+            item.status == "rdv" || item.status == "validating" ? (<DataTable.Row key = {index} style={styles.background_row}  onPress={() => navigation.navigate('DetailApplications', {
+              itemId: item.id,offer: item.offer.name,status: item.status, resume: item.resume,age: item.age,wage: item.wage,motivation: item.motivation,
+            })}>
+              <DataTable.Cell >{item.offer.name}</DataTable.Cell>
+              <DataTable.Cell>{item.age}</DataTable.Cell>
+              <DataTable.Cell>{item.motivation}</DataTable.Cell>
+              <DataTable.Cell>{item.status}</DataTable.Cell>
+              <DataTable.Cell numeric>{item.wage}</DataTable.Cell>
+            </DataTable.Row>):(null)
+
+
               ))
           } 
         <DataTable.Pagination
@@ -64,4 +70,4 @@ const ListApplicationsAccepted = ({ navigation }) => {
     }
   })
   
-export default ListApplicationsAccepted;
+export default ListApplications;

@@ -17,8 +17,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *     denormalizationContext={"groups"={"write_application"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ApplicationRepository")
- * @ApiFilter(PropertyFilter::class, arguments={"parameterName": "properties", "overrideDefaultProperties": false})
- * @ApiFilter(SearchFilter::class, properties={"status": "exact","applicant":"exact","offer":"exact"})
+ * @ApiFilter(SearchFilter::class, properties={"status": "word_start","applicant":"exact","offer":"exact"})
  */
 class Application
 {
