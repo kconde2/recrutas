@@ -14,6 +14,10 @@ function HomeScreen({ navigation }) {
         title="Recruiter space"
         onPress={() => navigation.navigate('RecruiterAccount')}
       />
+      <Button
+        title="Logout"
+        onPress={() => navigation.navigate('LogoutScreen')}
+      />
     </View>
   </Background>
 }

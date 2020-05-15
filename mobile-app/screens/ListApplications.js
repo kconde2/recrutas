@@ -7,14 +7,11 @@ import ApplicationListContext from '../context/Applicant/ApplicationContext';
 const ListApplications = ({ navigation }) => {
 
   const {state, actions} = React.useContext(ApplicationListContext);
-   
+
   React.useEffect(() => {
-    actions.getAll().then(() => {
-      console.log(state.applications);
-    });
+    actions.getAll()
   }, []);
 
-  console.log(state.applications);
 
   return (
     <SafeAreaView>
@@ -42,7 +39,7 @@ const ListApplications = ({ navigation }) => {
 
 
               ))
-          } 
+          }
         <DataTable.Pagination
           page={1}
           numberOfPages={3}
@@ -64,10 +61,10 @@ const ListApplications = ({ navigation }) => {
       fontWeight: "bold",
       fontSize:59,
     },
-    background_row: { 
+    background_row: {
       backgroundColor: 'white',
       fontSize:90,
     }
   })
-  
+
 export default ListApplications;

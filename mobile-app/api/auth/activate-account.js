@@ -12,7 +12,6 @@ async function activateAccount(token) {
   return new Promise((resolve, reject) => {
     fetch(`${apiConfig.API_URL}/users/${token}/activate`, options)
       .then(async (response) => {
-        console.log(response)
         if (response.status === 500) {
           reject("Une erreur inattendue s'est produite");
         }
@@ -38,7 +37,6 @@ async function activateAccount(token) {
         return response.json()
       })
       .then(response => {
-        console.log(response)
         resolve(response);
       })
       .catch(() => {

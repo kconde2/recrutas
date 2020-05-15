@@ -30,15 +30,15 @@ function ApplicationListProvider(props) {
 
   const actions = React.useMemo(
     () => ({
-      getAll: async () => {
-        const applications = await Api.getAll();
+      getAll: async (author, token) => {
+        const applications = await Api.getAll(author, token);
         dispatch({
           type: 'ALL',
           applications,
         });
       },
-      getSpecific: async (id) => {
-        const application = await Api.getSpecific(id);
+      getSpecific: async (id, token) => {
+        const application = await Api.getSpecific(id, token);
         dispatch({
           type: 'SPECIFIC',
           application,

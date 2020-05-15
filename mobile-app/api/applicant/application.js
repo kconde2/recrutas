@@ -1,6 +1,8 @@
+import apiConfig from '../../apiConfig';
+
 export default {
     getAllAccepted() {
-      return fetch('https://localhost:8443/applications?properties[]=status&status=accepted&properties[]=age&properties[]=motivation&properties[]=wage&properties[]=resume&properties[offer][]=name&applicant=21', {
+      return fetch(`${apiConfig.API_URL}/applications?properties[]=status&status=accepted&properties[]=age&properties[]=motivation&properties[]=wage&properties[]=resume&properties[offer][]=name&applicant=21`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -13,7 +15,7 @@ export default {
         .catch(error => Promise.reject(error));
     },
     getAll() {
-      return fetch('https://localhost:8443/applications?properties[]=status&properties[]=age&properties[]=motivation&properties[]=wage&properties[]=resume&properties[offer][]=name&applicant=21', {
+      return fetch(`${apiConfig.API_URL}/applications?properties[]=status&properties[]=age&properties[]=motivation&properties[]=wage&properties[]=resume&properties[offer][]=name&applicant=21`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -26,4 +28,3 @@ export default {
         .catch(error => Promise.reject(error));
     }
   };
-  

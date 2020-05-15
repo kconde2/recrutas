@@ -2,13 +2,15 @@ import React from 'react';
 import { ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import { Card, Text, Paragraph } from 'react-native-paper';
 import ApplicationListContext from '../../../context/Recruiter/ApplicationListContext';
+import AuthContext from '../../../context/Auth/AuthContext';
 
 function ApplicationScreen({ route }) {
   const { state, actions } = React.useContext(ApplicationListContext);
   const { id } = route.params;
+  const authContext = React.useContext(AuthContext);
 
   React.useEffect(() => {
-    actions.getSpecific(id).then(response => { });
+    actions.getSpecific(id, authContext.state.user.token).then(response => { });
   }, []);
 
   return (

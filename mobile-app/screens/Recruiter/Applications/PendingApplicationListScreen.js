@@ -2,23 +2,28 @@ import React from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import ApplicationListContext from '../../../context/Recruiter/ApplicationListContext';
+import AuthContext from '../../../context/Auth/AuthContext';
 
 function PendingApplicationListScreen({ navigation }) {
   const { state, actions } = React.useContext(ApplicationListContext);
+  const authContext = React.useContext(AuthContext);
 
   React.useEffect(() => {
-    actions.getAll();
+    actions.getAll(authContext.state.user.id, authContext.state.user.token);
   }, []);
 
   let options = []
-  state.applications.forEach(offer => {
-    offer.applications.forEach(application => {
-      if (application.status === 'opened') {
-        application = { ...application, offerName: offer.name, contractType: offer.contratType };
-        options.push(application)
-      }
-    })
-  });
+
+  if (state.applications.length) {
+    state.applications.forEach(offer => {
+      offer.applications.forEach(application => {
+        if (application.status === 'opened') {
+          application = { ...application, offerName: offer.name, contractType: offer.contratType };
+          options.push(application)
+        }
+      })
+    });
+  }
 
   return (
     <SafeAreaView>

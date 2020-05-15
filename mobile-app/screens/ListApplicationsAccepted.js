@@ -7,14 +7,11 @@ import ApplicationListContext from '../context/Applicant/ApplicationContext';
 const ListApplicationsAccepted = ({ navigation }) => {
 
   const {state, actions} = React.useContext(ApplicationListContext);
-   
+
   React.useEffect(() => {
-    actions.getAllAccepted().then(() => {
-      console.log(state.applications);
-    });
+    actions.getAllAccepted()
   }, []);
 
-  console.log(state.applications);
   return (
     <SafeAreaView>
       <ScrollView >
@@ -36,7 +33,7 @@ const ListApplicationsAccepted = ({ navigation }) => {
             <DataTable.Cell numeric>{item.wage}</DataTable.Cell>
           </DataTable.Row>
               ))
-          } 
+          }
         <DataTable.Pagination
           page={1}
           numberOfPages={3}
@@ -58,10 +55,10 @@ const ListApplicationsAccepted = ({ navigation }) => {
       fontWeight: "bold",
       fontSize:59,
     },
-    background_row: { 
+    background_row: {
       backgroundColor: 'white',
       fontSize:90,
     }
   })
-  
+
 export default ListApplicationsAccepted;
