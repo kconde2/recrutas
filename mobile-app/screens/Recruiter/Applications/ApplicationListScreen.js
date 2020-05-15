@@ -50,7 +50,7 @@ function ApplicationListScreen({ navigation }) {
                 );
               }) :
               <DataTable.Row>
-                <DataTable.Cell>No pending applications found.</DataTable.Cell>
+                <DataTable.Cell>No applications found.</DataTable.Cell>
               </DataTable.Row>
           }
 

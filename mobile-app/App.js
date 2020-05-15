@@ -22,6 +22,7 @@ import RecruiterApplicationListScreen from './screens/Recruiter/Applications/App
 import RecruiterApplicationDetailsScreen from './screens/Recruiter/Applications/ApplicationScreen';
 import RecruiterPendingApplicationList from './screens/Recruiter/Applications/PendingApplicationListScreen';
 import RecruiterAccountScreen from './screens/Recruiter/AccountScreen';
+import ApplicantAccountScreen from './screens/Applicant/AccountScreen';
 import RecruiterApplicationListProvider from './context/Recruiter/ApplicationListProvider';
 import RecruiterProvider from './context/Recruiter/RecruiterProvider'
 import AppScreen from './screens/AppScreen';
@@ -93,6 +94,11 @@ function AppContainer() {
               name="RecruiterAccount"
               component={RecruiterAccountScreen}
               options={{ title: 'Recruiter account' }}
+            />
+            <Stack.Screen
+              name="ApplicantAccount"
+              component={ApplicantAccountScreen}
+              options={{ title: 'Applicant Account' }}
             />
             <Stack.Screen name="ListApplications" component={ListApplications} options={{ title: 'List Applications' }} />
             <Stack.Screen name="DetailApplications" component={DetailApplications} options={{ title: 'Detail Applications' }} />
