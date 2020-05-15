@@ -1,5 +1,4 @@
 import * as React from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
 import ApplicationListContext from './ApplicationListContext';
 import Api from '../../api/recruiter/application';
 
@@ -8,18 +7,19 @@ const applicationListReducer = (state, action) => {
     case 'ALL':
       return {
         ...state,
-        applications: action.applications,
+        applications: action.applications["hydra:member"],
       };
-    case 'PENDING':
+    case 'SPECIFIC':
       return {
         ...state,
-        applications: action.applications,
+        application: action.application,
       };
   }
 };
 
 const initialState = {
   applications: [],
+  application: {}
 };
 
 function ApplicationListProvider(props) {
@@ -32,25 +32,24 @@ function ApplicationListProvider(props) {
     () => ({
       getAll: async () => {
         const applications = await Api.getAll();
-        console.log('ici', applications);
         dispatch({
           type: 'ALL',
           applications,
         });
       },
-      getPending: async () => {
-        const pendingApplications = await Api.getPending();
+      getSpecific: async (id) => {
+        const application = await Api.getSpecific(id);
         dispatch({
-          type: 'PENDING',
-          applications: pendingApplications,
+          type: 'SPECIFIC',
+          application,
         });
-      },
+      }
     }),
     [],
   );
   return (
     <>
-      <ApplicationListContext.Provider value={{state, dispatch, actions}}>
+      <ApplicationListContext.Provider value={{ state, dispatch, actions }}>
         {props.children}
       </ApplicationListContext.Provider>
     </>

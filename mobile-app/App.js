@@ -19,10 +19,11 @@ import AuthContext from './context/Auth/AuthContext';
 import OfferFormScreen from './screens/Recruiter/OfferFormScreen';
 import OfferScreen from './screens/Recruiter/Offer'
 import RecruiterApplicationListScreen from './screens/Recruiter/Applications/ApplicationListScreen';
+import RecruiterApplicationDetailsScreen from './screens/Recruiter/Applications/ApplicationScreen';
+import RecruiterPendingApplicationList from './screens/Recruiter/Applications/PendingApplicationListScreen';
 import RecruiterAccountScreen from './screens/Recruiter/AccountScreen';
-import ApplicationListProvider from './context/Recruiter/ApplicationListProvider';
+import RecruiterApplicationListProvider from './context/Recruiter/ApplicationListProvider';
 import RecruiterProvider from './context/Recruiter/RecruiterProvider'
-import LoginScreen from './screens/Auth/LoginScreen';
 import AppScreen from './screens/AppScreen';
 import ForgotPasswordScreen from './screens/Auth/ForgotPasswordScreen';
 import ApplicantApplicationProvider from './context/Applicant/ApplicationListProvider';
@@ -33,6 +34,7 @@ import DetailApplications from './screens/DetailApplications';
 
 import ConfirmAccountInfoScreen from './screens/Auth/ConfirmAccountInfoScreen';
 import ActivateAccountScreen from './screens/Auth/ActivateAccountScreen';
+import LoginScreen from './screens/Auth/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -40,11 +42,11 @@ function App() {
   return (
     <AuthProvider>
       <RecruiterProvider>
-        <ApplicationListProvider>
+        <RecruiterApplicationListProvider>
           <ApplicantApplicationProvider>
             <AppContainer />
           </ApplicantApplicationProvider>
-        </ApplicationListProvider>
+        </RecruiterApplicationListProvider>
       </RecruiterProvider>
     </AuthProvider>
   );
@@ -70,11 +72,6 @@ function AppContainer() {
         <>
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Accueil' }} />
-            <Stack.Screen name="ListApplications" component={ListApplications} options={{ title: 'List Applications' }} />
-            <Stack.Screen name="DetailApplications" component={DetailApplications} options={{ title: 'Detail Applications' }} />
-            <Stack.Screen name="ListApplicationsAccepted" component={ListApplicationsAccepted} options={{ title: 'List Applications Accepted' }} />
-            <Stack.Screen name="DetailApplicationsAccepted" component={DetailApplicationsAccepted} options={{ title: 'Detail Applications Accepted' }} />
-
             <Stack.Screen name="Details" component={DetailsScreen} />
             <Stack.Screen
               name="RecruiterApplicationList"
@@ -82,10 +79,24 @@ function AppContainer() {
               options={{ title: 'All applications' }}
             />
             <Stack.Screen
+              name="RecruiterPendingApplicationList"
+              component={RecruiterPendingApplicationList}
+              options={{ title: 'All applications' }}
+            />
+            <Stack.Screen
+              name="RecruiterApplicationDetails"
+              component={RecruiterApplicationDetailsScreen}
+              options={{ title: 'Aplication\'s details' }}
+            />
+            <Stack.Screen
               name="RecruiterAccount"
               component={RecruiterAccountScreen}
               options={{ title: 'Recruiter account' }}
             />
+            <Stack.Screen name="ListApplications" component={ListApplications} options={{ title: 'List Applications' }} />
+            <Stack.Screen name="DetailApplications" component={DetailApplications} options={{ title: 'Detail Applications' }} />
+            <Stack.Screen name="ListApplicationsAccepted" component={ListApplicationsAccepted} options={{ title: 'List Applications Accepted' }} />
+            <Stack.Screen name="DetailApplicationsAccepted" component={DetailApplicationsAccepted} options={{ title: 'Detail Applications Accepted' }} />
             <Stack.Screen name="OfferForm" component={OfferFormScreen} />
             <Stack.Screen name="Offer" component={OfferScreen} />
           </Stack.Navigator>
@@ -103,7 +114,7 @@ function AppContainer() {
           </>
         )}
     </NavigationContainer>
-  </>;
+  </>
 }
 
 

@@ -27,6 +27,7 @@ class Application
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read_offer"})
      */
     private $id;
 
