@@ -9,7 +9,6 @@ function ApplicationListScreen({ navigation }) {
   const authContext = React.useContext(AuthContext);
 
   React.useEffect(() => {
-    console.log("authContext.state.user.token => ",authContext.state.user.token);
     actions.getAll(authContext.state.user.id, authContext.state.user.token);
   }, []);
 
@@ -51,7 +50,7 @@ function ApplicationListScreen({ navigation }) {
                 );
               }) :
               <DataTable.Row>
-                <DataTable.Cell>No pending applications found.</DataTable.Cell>
+                <DataTable.Cell>No applications found.</DataTable.Cell>
               </DataTable.Row>
           }
 

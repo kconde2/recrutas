@@ -30,7 +30,7 @@ function ForgotPasswordScreen({ navigation }) {
         <Background>
           <BackButton goBack={() => navigation.navigate('LoginScreen')} />
 
-          <Logo />
+          {/* <Logo /> */}
 
           <Header>Mot de passe oublié</Header>
 
