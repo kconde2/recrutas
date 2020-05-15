@@ -32,7 +32,6 @@ function ApplicationListProvider(props) {
     () => ({
       getAllAccepted: async () => {
         const applications = await Api.getAllAccepted();
-        console.log('Accepted', applications);
         dispatch({
           type: 'ALL_ACCEPTED',
           applications,
@@ -40,7 +39,6 @@ function ApplicationListProvider(props) {
       },
       getAll: async () => {
         const applications = await Api.getAll();
-        console.log('ALL', applications);
         dispatch({
           type: 'ALL',
           applications,

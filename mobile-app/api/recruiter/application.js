@@ -1,11 +1,13 @@
+import apiConfig from '../../apiConfig'
+
 const headers = {
   'Content-Type': 'application/json',
 }
 
 export default {
-  getAll() {
-    // TODO: Replace 3 by loggedIn recruiter's id
-    return fetch(`https://localhost:8443/offers?author=3`, {
+  getAll(author, token) {
+    headers['Authorization'] = 'Bearer ' + token
+    return fetch(`${apiConfig.API_URL}/offers?author=${author}`, {
       method: 'GET',
       headers: headers,
     })
@@ -15,8 +17,9 @@ export default {
       .then(app => Promise.resolve(app))
       .catch(error => Promise.reject(error));
   },
-  getSpecific(id) {
-    return fetch(`https://localhost:8443/applications/${id}`, {
+  getSpecific(id, token) {
+    headers['Authorization'] = 'Bearer ' + token
+    return fetch(`${apiConfig.API_URL}/applications/${id}`, {
       method: 'GET',
       headers: headers,
     })

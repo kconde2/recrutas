@@ -35,6 +35,7 @@ import DetailApplications from './screens/DetailApplications';
 import ConfirmAccountInfoScreen from './screens/Auth/ConfirmAccountInfoScreen';
 import ActivateAccountScreen from './screens/Auth/ActivateAccountScreen';
 import LoginScreen from './screens/Auth/LoginScreen';
+import LogoutScreen from './screens/Auth/LogoutScreen';
 
 const Stack = createStackNavigator();
 
@@ -99,6 +100,7 @@ function AppContainer() {
             <Stack.Screen name="DetailApplicationsAccepted" component={DetailApplicationsAccepted} options={{ title: 'Detail Applications Accepted' }} />
             <Stack.Screen name="OfferForm" component={OfferFormScreen} />
             <Stack.Screen name="Offer" component={OfferScreen} />
+            <Stack.Screen name="LogoutScreen" component={LogoutScreen} options={{ headerShown: false }} />
           </Stack.Navigator>
         </>
       ) : (

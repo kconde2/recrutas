@@ -2,12 +2,15 @@ import React from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import ApplicationListContext from '../../../context/Recruiter/ApplicationListContext';
+import AuthContext from '../../../context/Auth/AuthContext';
 
 function ApplicationListScreen({ navigation }) {
   const { state, actions } = React.useContext(ApplicationListContext);
+  const authContext = React.useContext(AuthContext);
 
   React.useEffect(() => {
-    actions.getAll();
+    console.log("authContext.state.user.token => ",authContext.state.user.token);
+    actions.getAll(authContext.state.user.id, authContext.state.user.token);
   }, []);
 
   let options = []

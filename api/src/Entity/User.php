@@ -6,6 +6,7 @@ use App\Controller\ActivateUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Constant\UserRole;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -368,5 +369,10 @@ class User implements UserInterface
         $this->isActive = $isActive;
 
         return $this;
+    }
+
+    public function getRoleAsString()
+    {
+        return UserRole::getRoles()[$this->getRoles()[0]];
     }
 }

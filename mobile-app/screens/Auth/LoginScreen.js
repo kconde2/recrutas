@@ -10,8 +10,8 @@ import { emailValidator, passwordValidator } from '../../core/utils';
 import AuthContext from '../../context/Auth/AuthContext';
 
 function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState({ value: 'a@gmail.com', error: '' });
-  const [password, setPassword] = useState({ value: 'a', error: '' });
+  const [email, setEmail] = useState({ value: 'a1@gmail.com', error: '' });
+  const [password, setPassword] = useState({ value: 'password', error: '' });
 
   const { actions } = React.useContext(AuthContext);
 
@@ -25,7 +25,9 @@ function LoginScreen({ navigation }) {
       return;
     }
 
-    actions.signIn({ email, password })
+    actions.signIn({ email: email.value, password: password.value }).catch(error => {
+      alert(error)
+    })
   };
 
   return (
