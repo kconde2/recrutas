@@ -30,15 +30,15 @@ function ApplicationListProvider(props) {
 
   const actions = React.useMemo(
     () => ({
-      getAllAccepted: async () => {
-        const applications = await Api.getAllAccepted();
+      getAllAccepted: async (author, token) => {
+        const applications = await Api.getAllAccepted(author, token);
         dispatch({
           type: 'ALL_ACCEPTED',
           applications,
         });
       },
-      getAll: async () => {
-        const applications = await Api.getAll();
+      getAll: async (author, token) => {
+        const applications = await Api.getAll(author, token);
         dispatch({
           type: 'ALL',
           applications,
@@ -49,7 +49,7 @@ function ApplicationListProvider(props) {
   );
   return (
     <>
-      <ApplicationContext.Provider value={{state, dispatch, actions}}>
+      <ApplicationContext.Provider value={{ state, dispatch, actions }}>
         {props.children}
       </ApplicationContext.Provider>
     </>

@@ -9,7 +9,6 @@ function ApplicationListScreen({ navigation }) {
   const authContext = React.useContext(AuthContext);
 
   React.useEffect(() => {
-    console.log("authContext.state.user.token => ",authContext.state.user.token);
     actions.getAll(authContext.state.user.id, authContext.state.user.token);
   }, []);
 
