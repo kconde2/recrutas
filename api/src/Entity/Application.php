@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Constant\ApplicationStatus;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,6 +17,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *     denormalizationContext={"groups"={"write_application"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ApplicationRepository")
+ * @ApiFilter(SearchFilter::class, properties={"status": "word_start","applicant":"exact","offer":"exact"})
  */
 class Application
 {
@@ -35,7 +39,7 @@ class Application
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Offer", inversedBy="applications")
-     * @Groups({"read_application","read_offer"})
+     * @Groups({"read_offer","read_application"})
      */
     private $offer;
 

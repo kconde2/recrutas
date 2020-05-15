@@ -16,6 +16,11 @@ function AccountScreen({ navigation }) {
           title="Pending application"
           onPress={() => navigation.navigate('RecruiterPendingApplicationList')}
         />
+
+        <Button
+          title="Add offer"
+          onPress={() => navigation.navigate('OfferForm')}
+        />
       </View>
     </View>
   );
