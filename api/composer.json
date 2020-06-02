@@ -28,6 +28,10 @@
     },
     "require-dev": {
         "api-platform/schema-generator": "^2.1",
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "fzaninotto/faker": "^1.9",
+        "hautelook/alice-bundle": "^2.7",
+        "symfony/maker-bundle": "^1.11",
         "symfony/profiler-pack": "^1.0"
     },
     "conflict": {

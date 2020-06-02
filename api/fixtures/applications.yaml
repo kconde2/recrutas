@@ -1,0 +1,4 @@
+App\Entity\Application: 
+  application_{1..50}:
+    status: <{app.alice.parameters.fool1}>
+    motivation: <foo('test')>

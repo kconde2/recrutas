@@ -39,3 +39,6 @@ services:
             class: App\EventListener\AuthenticationSuccessListener
             tags:
                 - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+    
+    App\DataFixtures\Faker\Provider\FooProvider:
+            tags: [ { name: nelmio_alice.faker.provider } ]

@@ -1,0 +1,2 @@
+parameters:
+  app.alice.parameters.fool1: "test"
