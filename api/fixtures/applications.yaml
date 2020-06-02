@@ -1,4 +1,6 @@
 App\Entity\Application: 
   application_{1..50}:
-    status: <{app.alice.parameters.fool1}>
-    motivation: <foo('test')>
+    age: <randomDigit()>
+    applicant: '@user_*'
+    status: <randomElement(['created', 'opened', 'validating', 'rdv','accepted','refused'])>
+    motivation: <text()>

@@ -1,0 +1,12 @@
+App\Entity\User: 
+  user_{1..50}:
+    email: <randomDigit()>
+    roles: <>
+    firstname: <firstName()>
+    lastname: <lastName()>
+    gender: <randomElement(['M','F'])>
+    profileImage: <imageUrl(640, 480)>
+    address: <foo('test')>
+    token: <foo('test')>
+    offers: '@offer_*'
+    isActive: true
