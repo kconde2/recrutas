@@ -1,0 +1,10 @@
+App\Entity\Offer: 
+  offer_{1..50}:
+    name: <randomDigit()>
+    companyDetails: '@user_*'
+    description: <{app.alice.parameters.fool1}>
+    startAt: <foo('test')>
+    contratType: <randomElement(['cdi', 'cdd', 'apprentice', 'interim'])>
+    workplace: <foo('test')>
+    applications: <foo('test')>
+    author: <foo('test')>
