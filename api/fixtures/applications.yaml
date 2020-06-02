@@ -4,3 +4,4 @@ App\Entity\Application:
     applicant: '@user_*'
     status: <randomElement(['created', 'opened', 'validating', 'rdv','accepted','refused'])>
     motivation: <text()>
+    offer: '@offer_*'
