@@ -52,7 +52,7 @@ class UserFixtures extends Fixture
             $userRecruiter->setProfileImage($faker->md5.".jpg");
             $userRecruiter->setAddress($faker->address);
             $userRecruiter->setRoles(['ROLE_RECRUITER']);
-            $userApplicant[$i]->setIsActive(true);
+            $userRecruiter->setIsActive(true);
             $manager->persist($userRecruiter);
         }
 
