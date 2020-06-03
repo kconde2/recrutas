@@ -10,7 +10,6 @@ Feature: _User_
     {
         email: "test@test.com"
         password: "$argon2id$v=19$m=65536,t=4,p=1$cMH2swfacaqZCwGA5JWOPA$J09JznitkqUp0uGDsslacn63HhhNEikbhjbZtuYm4ns"
-        isValide: true
     }
     """
     Given I request "POST /users"
