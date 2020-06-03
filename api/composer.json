@@ -60,7 +60,10 @@
     "autoload-dev": {
         "psr-4": {
             "App\\Tests\\": "tests/"
-        }
+        },
+        "classmap": [
+            "bin/.phpunit/phpunit-7.5-0/src"
+        ]
     },
     "config": {
         "preferred-install": {
