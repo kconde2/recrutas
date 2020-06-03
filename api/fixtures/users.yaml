@@ -1,4 +1,4 @@
-App\Entity\User: 
+App\Entity\User:
   user_{1..50}:
     email: <email()>
     roles: <randomElements(['ROLE_APPLICANT','ROLE_RECRUITER'])>
@@ -7,4 +7,5 @@ App\Entity\User:
     gender: <randomElement(['M','F'])>
     profileImage: <imageUrl(640, 480)>
     address: <address()>
+    password: <{password}>
     isActive: true
