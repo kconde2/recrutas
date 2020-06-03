@@ -39,4 +39,4 @@ security:
         - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
         - { path: ^/users/\.*/activate, role: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }

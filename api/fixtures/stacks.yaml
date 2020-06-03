@@ -1,0 +1,5 @@
+App\Entity\Stack:
+  stack_{1..50}:
+    name: <{app.alice.parameters.fool1}>
+    description: <foo('test')>
+    tag: '@tag_*'
