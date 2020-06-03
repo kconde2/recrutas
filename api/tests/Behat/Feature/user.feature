@@ -4,14 +4,33 @@ Feature: _User_
       | parameters     |
       | users          |
 
-  Scenario: test post user
+  Scenario: Login
     Given I have the payload
     """
     {
-        email: "test@test.com"
-        password: "$argon2id$v=19$m=65536,t=4,p=1$cMH2swfacaqZCwGA5JWOPA$J09JznitkqUp0uGDsslacn63HhhNEikbhjbZtuYm4ns"
+      "email": "reichel.zetta@hotmail.com",
+      "password": "change-this-password"
+    }
+    """
+    Given I request "POST /authentication_token"
+    Then the response status code should be 200
+    # Then print last response
+
+  Scenario: Register
+    Given I have the payload
+    """
+    {
+      "email": "reichel2.zetta@hotmail.com",
+      "roles": [
+        "ROLE_RECRUITER"
+      ],
+      "password": "new-password",
+      "firstname": "Sidiki",
+      "lastname": "TOURE",
+      "gender": "M",
+      "address": "12 Rue de la Chapelle"
     }
     """
     Given I request "POST /users"
     When the response status code should be 201
-    Then print last response
+    # Then print last response
