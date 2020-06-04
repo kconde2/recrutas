@@ -65,10 +65,15 @@ trait RequestTrait
     {
         $method = strtoupper($httpMethod);
 
-        $options = array();
+        $options = [];
 
-        if($this->authUser) {
-            $options = ['auth' => [$this->authUser, $this->authPassword]];
+        if ($this->authUser) {
+            $options = [
+                'auth' => [
+                    $this->authUser,
+                    $this->authPassword
+                ]
+            ];
         }
 
         $this->lastRequest = new Request(
@@ -143,9 +148,11 @@ trait RequestTrait
     {
         $response = $this->getLastResponse();
 
-        assertEquals($statusCode,
+        assertEquals(
+            $statusCode,
             $response->getStatusCode(),
-            sprintf('Expected status code "%s" does not match observed status code "%s"', $statusCode, $response->getStatusCode()));
+            sprintf('Expected status code "%s" does not match observed status code "%s"', $statusCode, $response->getStatusCode())
+        );
     }
 
     /**
@@ -156,7 +163,7 @@ trait RequestTrait
      */
     protected function getLastResponse()
     {
-        if (! $this->lastResponse) {
+        if (!$this->lastResponse) {
             throw new \Exception("You must first make a request to check a response.");
         }
 
@@ -216,7 +223,7 @@ trait RequestTrait
     {
         $payload = $this->getResponsePayload();
 
-        if (! $this->scope) {
+        if (!$this->scope) {
             return $payload;
         }
 
