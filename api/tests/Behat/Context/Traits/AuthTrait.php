@@ -18,6 +18,8 @@ trait AuthTrait
      */
     protected $authPassword;
 
+    protected $authManager;
+
     /**
      * @Given /^I authenticate with user "([^"]*)" and password "([^"]*)"$/
      */
@@ -25,5 +27,27 @@ trait AuthTrait
     {
         $this->authUser = $email;
         $this->authPassword = $password;
+    }
+
+    /**
+     * @Given /^I authenticate as "([^"]*)"$/
+     *
+     * @param string $userRole
+     */
+    public function iAuthenticateWithRole(string $userRole)
+    {
+        $user = $this->referenceManager->getReference('ROLE_' . $userRole);
+
+        if (!$user instanceof User) {
+            return;
+        }
+
+        // $this->authManager->authenticate
+        // $this->request
+        $this->requestManager->authenticate($user->getEmail(), $user->getPassword());
+
+        print_r($user->getPassword());
+
+        //print_r($userReference->getEmail());
     }
 }
