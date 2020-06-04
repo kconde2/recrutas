@@ -41,7 +41,7 @@ trait RequestTrait
      *
      * @var array[]
      */
-    protected $requestHeaders = array();
+    protected $requestHeaders = [];
 
     /**
      * The last request that was used to make the response
@@ -55,6 +55,8 @@ trait RequestTrait
      */
     public function iHaveThePayload(PyStringNode $requestPayload)
     {
+        $requestPayload = $this->referenceManager->renderPyStringNodeTemplate($requestPayload);
+
         $this->requestPayload = json_decode($requestPayload->getRaw());
     }
 
@@ -64,6 +66,8 @@ trait RequestTrait
     public function iRequest($httpMethod, $resource)
     {
         $method = strtoupper($httpMethod);
+
+        $resource = $this->referenceManager->renderTwigTemplate($resource);
 
         $options = [];
 

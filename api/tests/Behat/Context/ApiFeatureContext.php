@@ -9,10 +9,12 @@ use App\Tests\Behat\Context\Traits\{
     FixturesTrait,
     HookTrait,
     OutputTrait,
+    ReferenceTrait,
     RequestTrait,
     ScopeTrait,
     UtilsTrait
 };
+use App\Tests\Behat\Manager\ReferenceManager;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -21,6 +23,7 @@ require_once __DIR__  . '/../../../bin/.phpunit/phpunit-7.5-0/src/Framework/Asse
 
 class ApiFeatureContext implements Context
 {
+    use ReferenceTrait;
     use UtilsTrait;
     use HookTrait;
     use FixturesTrait;
@@ -32,11 +35,12 @@ class ApiFeatureContext implements Context
     /**
      * Initializes context.
      */
-    public function __construct(KernelInterface $kernel, FixtureManager $fixtureManager, OutputManager $outputManager)
+    public function __construct(KernelInterface $kernel, FixtureManager $fixtureManager, OutputManager $outputManager, ReferenceManager $referenceManager)
     {
         $this->client = $kernel->getContainer()->get('test.api_platform.client');
         $this->fixtureManager = $fixtureManager;
         $this->outputManager = $outputManager;
+        $this->referenceManager = $referenceManager;
     }
 
     /**
@@ -161,7 +165,7 @@ class ApiFeatureContext implements Context
         $scopePayload = $this->arrayGet($payload, $property);
 
         assertTrue(
-            is_array($scopePayload) and $scopePayload === array(),
+            is_array($scopePayload) and $scopePayload === [],
             "Asserting the [$property] property in current scope [{$this->scope}] is an empty array: ".json_encode($payload)
         );
     }
