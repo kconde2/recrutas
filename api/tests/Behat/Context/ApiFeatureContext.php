@@ -55,7 +55,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyEquals($property, $expectedValue)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
         $actualValue = $this->arrayGet($payload, $property);
 
         assertEquals(
@@ -70,7 +70,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyShouldContain($property, $expectedValue)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
         $actualValue = $this->arrayGet($payload, $property);
 
         // if the property is actually an array, use JSON so we look in it deep
@@ -87,7 +87,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyShouldNotContain($property, $expectedValue)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
         $actualValue = $this->arrayGet($payload, $property);
 
         // if the property is actually an array, use JSON so we look in it deep
@@ -104,7 +104,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyExists($property)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
 
         $message = sprintf(
             'Asserting the [%s] property exists in the scope [%s]: %s',
@@ -121,7 +121,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyDoesNotExist($property)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
 
         $message = sprintf(
             'Asserting the [%s] property does not exist in the scope [%s]: %s',
@@ -138,7 +138,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyIsAnArray($property)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
 
         $actualValue = $this->arrayGet($payload, $property);
 
@@ -153,7 +153,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyIsAnObject($property)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
 
         $actualValue = $this->arrayGet($payload, $property);
 
@@ -168,7 +168,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyIsAnEmptyArray($property)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
         $scopePayload = $this->arrayGet($payload, $property);
 
         assertTrue(
@@ -182,7 +182,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyContainsItems($property, $count)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
 
         assertCount(
             $count,
@@ -196,7 +196,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyIsAnInteger($property)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
 
         isType(
             'int',
@@ -210,7 +210,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyIsAString($property)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
 
         isType(
             'string',
@@ -224,7 +224,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyIsAStringEqualling($property, $expectedValue)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
 
         $this->thePropertyIsAString($property);
 
@@ -242,7 +242,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyIsABoolean($property)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
 
         assertTrue(
             gettype($this->arrayGet($payload, $property)) == 'boolean',
@@ -255,7 +255,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyIsABooleanEqualling($property, $expectedValue)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
         $actualValue = $this->arrayGet($payload, $property);
 
         if (!in_array($expectedValue, array('true', 'false'))) {
@@ -276,7 +276,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyIsAIntegerEqualling($property, $expectedValue)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
         $actualValue = $this->arrayGet($payload, $property);
 
         $this->thePropertyIsAnInteger($property);
@@ -293,7 +293,7 @@ class ApiFeatureContext implements Context
      */
     public function thePropertyIsEither($property, PyStringNode $options)
     {
-        $payload = $this->requestManager->getScopePayload();
+        $payload = $this->getScopePayload();
         $actualValue = $this->arrayGet($payload, $property);
 
         $valid = explode("\n", (string) $options);

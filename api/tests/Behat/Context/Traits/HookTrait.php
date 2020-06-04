@@ -20,9 +20,13 @@ trait HookTrait
      */
     public function beforeScenario()
     {
-        //var_dump("before sena");
+
         /** Init default Content-Type */
         $this->requestHeaders["Content-Type"] = "application/ld+json";
+
+        // clean all reference before any scenario
+        $this->referenceManager->cleanReferences();
+
         StaticDriver::beginTransaction();
     }
 

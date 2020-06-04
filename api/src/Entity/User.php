@@ -97,7 +97,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Choice(callback={"App\Constant\UserGender", "getInvertedGenders"}, multiple=false)
+     * @Assert\Choice(callback={"App\Constant\UserGender", "getInvertedGenders"}, multiple=false, message="Vous devez choisir entre M ou F")
      * @Assert\NotBlank(message="Vous devez choisissez un role")
      * @Groups({"read", "write","read_application","read_offer"})
      */
