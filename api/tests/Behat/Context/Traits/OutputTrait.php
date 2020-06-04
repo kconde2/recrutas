@@ -57,7 +57,7 @@ trait OutputTrait
             $this->outputManager->printDebug('<error>Failure!</error> when making the following request:');
             $this->outputManager->printDebug(sprintf('<comment>%s</comment>: <info>%s</info>', $lastRequest->getMethod(), $lastRequest->getUri()) . "\n");
 
-            if (in_array($lastResponse->getHeaders()['content-type'], ['application/json', 'application/problem+json'])) {
+            if (in_array($lastResponse->getHeaders()['Content-Type'], ['application/ld+json','application/json', 'application/problem+json'])) {
                 $this->outputManager->printDebug($this->prettifyJson($body));
             } else {
                 // the response is HTML - see if we should print all of it or some of it
