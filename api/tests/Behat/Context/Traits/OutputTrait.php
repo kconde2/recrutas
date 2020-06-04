@@ -20,8 +20,8 @@ trait OutputTrait
     public function printLastResponse()
     {
         $lastResponse = $this->requestManager->getLastResponse();
-
         if ($lastResponse) {
+
             // Build the first line of the response (protocol, protocol version, statuscode, reason phrase)
             $response = 'HTTP/1.1 ' . $lastResponse->getStatusCode() . "\r\n";
 

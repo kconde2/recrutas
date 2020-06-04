@@ -3,25 +3,16 @@
 namespace App\Tests\Behat\Manager;
 
 use Behat\Gherkin\Node\PyStringNode;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Twig\Environment;
 
 class ReferenceManager
 {
-    private $values = [];
+    private $references = [];
 
     private $twig;
 
-    public function __construct(KernelInterface $kernel)
+    public function __construct(Environment $twig)
     {
-        $container = $kernel->getContainer();
-
-        if (!$container->has('twig')) {
-            throw new \LogicException(
-                "Could not find 'twig' service. Try running 'composer req --dev twig/twig symfony/twig-bundle' or 'composer require template' if you prefer using flex."
-            );
-        }
-
-        $twig = $container->get('twig');
         $this->twig = $twig;
     }
 
@@ -29,7 +20,7 @@ class ReferenceManager
     {
         $template = $this->twig->createTemplate($string);
 
-        return $this->twig->render($template, $this->values);
+        return $this->twig->render($template, $this->references);
     }
 
     public function renderPyStringNodeTemplate(PyStringNode $pyStringNode): PyStringNode
@@ -40,39 +31,47 @@ class ReferenceManager
         return new PyStringNode(explode("\n", $raw), $line);
     }
 
-    public function getReference(string $reference) {
-        return $this->values[$reference];
+    public function getReference(string $reference)
+    {
+        return $this->references[$reference] ?? null;
     }
 
-    public function setReference(string $reference, $value) {
-        return $this->values[$reference] = $value;
+    public function setReference(string $reference, $value)
+    {
+        return $this->references[$reference] = $value;
     }
 
-    public function removeReference($reference) {
-        unset($this->values[$reference]);
+    public function removeReference(string $reference)
+    {
+        unset($this->references[$reference]);
     }
 
     public function checkReference($reference): bool
     {
-        return array_key_exists($reference, $this->values);
+        return array_key_exists($reference, $this->references);
     }
 
-    /**
-     * Get the value of values
-     */
-    public function getValues()
+    public function cleanReferences(): void
     {
-        return $this->values;
+        $this->references = [];
     }
 
     /**
-     * Set the value of values
+     * Get the value of references
+     */
+    public function getReferences()
+    {
+        return $this->references;
+    }
+
+    /**
+     * Set the value of references
      *
      * @return  self
      */
-    public function setValues($values)
+    public function setReferences($references)
     {
-        $this->values = $values;
+        $this->references = $references;
 
         return $this;
     }
