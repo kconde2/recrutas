@@ -72,3 +72,28 @@ Feature: _Offer_
     Given I request "DELETE /offers/{{ offer_4.id }}"
     When the response status code should be 204
     Then print last response
+
+    ####################### ERROR SCENARIO #################################
+
+  Scenario: test get offer without auth
+    Given I request "GET /offers"
+    When the response status code should be 401
+    Then print last response
+
+  Scenario: test post offer with wrong data
+    Given I authenticate as "RECRUITER"
+    Given I have the payload
+      """
+      {
+        "name": "Developer",
+        "companyDetails": "BNP",
+        "description": "Developer front",
+        "startAt": "2020-06-03",
+        "contratType": "REDHA",
+        "workplace": "Paris",
+        "author": "users/{{ auth_user.id }}"
+      }
+      """
+    When I request "POST /offers"
+    When the response status code should be 400
+    Then print last response
