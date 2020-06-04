@@ -213,7 +213,6 @@ trait RequestTrait
         return $this->responsePayload;
     }
 
-
     /**
      * Returns the payload from the current scope within
      * the response.
