@@ -11,7 +11,7 @@ class OutputManager
      */
     private $output;
 
-    private $useFancyExceptionReporting = true;
+    public $useFancyExceptionReporting = true;
 
     /**
      * Returns the prettified equivalent of the input if the input is valid JSON.

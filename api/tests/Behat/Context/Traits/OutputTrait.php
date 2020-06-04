@@ -57,13 +57,14 @@ trait OutputTrait
             $this->outputManager->printDebug('<error>Failure!</error> when making the following request:');
             $this->outputManager->printDebug(sprintf('<comment>%s</comment>: <info>%s</info>', $lastRequest->getMethod(), $lastRequest->getUri()) . "\n");
 
-            if (in_array($lastResponse->getHeaders()['Content-Type'], ['application/ld+json','application/json', 'application/problem+json'])) {
+            $lastResponseHeader = $lastResponse->getHeaders();
+            if (array_key_exists('Content-Type',$lastResponseHeader) && in_array($lastResponseHeader['Content-Type'], ['application/ld+json','application/json', 'application/problem+json'])) {
                 $this->outputManager->printDebug($this->prettifyJson($body));
             } else {
                 // the response is HTML - see if we should print all of it or some of it
                 $isValidHtml = strpos($body, '</body>') !== false;
 
-                if ($this->useFancyExceptionReporting && $isValidHtml) {
+                if ($this->outputManager->useFancyExceptionReporting && $isValidHtml) {
                     $this->outputManager->printDebug('<error>Failure!</error> Below is a summary of the HTML response from the server.');
 
                     // finds the h1 and h2 tags and prints them only
