@@ -28,3 +28,8 @@ yarn android
 ```shell
 adb reverse tcp:8443 tcp:8443
 ```
+
+### References
+
+- [https://alexandre.salome.fr/blog/twig-templating-in-behat-tests](https://alexandre.salome.fr/blog/twig-templating-in-behat-tests)
+- [https://medium.com/manomano-tech/efficient-testing-with-fixtures-on-symfony-4-db0a8ea75245](https://medium.com/manomano-tech/efficient-testing-with-fixtures-on-symfony-4-db0a8ea75245)
