@@ -44,7 +44,7 @@ class ReferenceManager
         return $this->values[$reference];
     }
 
-    public function addReference(string $reference, $value) {
+    public function setReference(string $reference, $value) {
         return $this->values[$reference] = $value;
     }
 

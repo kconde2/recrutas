@@ -6,11 +6,6 @@ class AuthManager
 {
     private $bearerToken;
 
-    public function authenticate(string $email, string $password)
-    {
-
-    }
-
     /**
      * Get the value of bearerToken
      */

@@ -54,7 +54,7 @@ trait RequestTrait
 
         try {
             // Send request
-            $response = $this->requestManager->request($httpMethod, $resource);
+            $response = $this->requestManager->request($method, $resource);
             $this->requestManager->setLastResponse($response);
         } catch (\Exception $e) {
             $response = $e->getMessage();
@@ -75,7 +75,7 @@ trait RequestTrait
      */
     public function iSetTheHeaderToBe($headerName, $value)
     {
-        $this->requestManager->addRequestHeader($headerName, $value);
+        $this->requestManager->setRequestHeader($headerName, $value);
     }
 
     /**
@@ -116,5 +116,22 @@ trait RequestTrait
             $response->getStatusCode(),
             sprintf('Expected status code "%s" does not match observed status code "%s"', $statusCode, $response->getStatusCode())
         );
+    }
+
+     /**
+     * Returns the payload from the current scope within
+     * the response.
+     *
+     * @return mixed
+     */
+    public function getScopePayload()
+    {
+        $payload = $this->requestManager->getResponsePayload();
+
+        if (!$this->scope) {
+            return $payload;
+        }
+
+        return $this->arrayGet($payload, $this->scope, true);
     }
 }

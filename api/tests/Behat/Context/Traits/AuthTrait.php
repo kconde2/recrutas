@@ -2,6 +2,8 @@
 
 namespace App\Tests\Behat\Context\Traits;
 
+use App\Entity\User;
+
 trait AuthTrait
 {
     /**
@@ -42,12 +44,29 @@ trait AuthTrait
             return;
         }
 
-        // $this->authManager->authenticate
-        // $this->request
-        $this->requestManager->authenticate($user->getEmail(), $user->getPassword());
+        $email  = $user->getEmail();
+        $password = 'change-this-password';
+        $payload = json_decode(sprintf('{"email":"%s", "password": "%s"}', $email, $password));
 
-        print_r($user->getPassword());
+        // set request header and payload for login
+        $this->requestManager
+            ->setRequestPayload($payload)
+            ->setRequestHeader('Content-Type', 'application/json');
 
-        //print_r($userReference->getEmail());
+        // send authnentication request
+        $this->iRequest('POST', '/authentication_token');
+
+        // extract token from response
+        $authToken = $this->arrayGet($this->getScopePayload(), 'token');
+
+        // add token to authorization header
+        $this->requestManager->setRequestHeader('Authorization', sprintf('Bearer %s', $authToken));
+        $this->authManager->setBearerToken($authToken);
+
+        // save auth user reference
+        $this->referenceManager->setReference('auth_user', $user);
+
+        // reset header content type
+        $this->requestManager->setRequestHeader('Content-Type', 'application/ld+json');
     }
 }

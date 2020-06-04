@@ -29,11 +29,6 @@ class RequestManager
      */
     private $client;
 
-    public function __construct(KernelInterface $kernel)
-    {
-        $this->client = $kernel->getContainer()->get('test.api_platform.client');
-    }
-
     /**
      * The response of the HTTP request
      *
@@ -46,7 +41,9 @@ class RequestManager
      *
      * @var array[]
      */
-    private $requestHeaders = [];
+    private $requestHeaders = [
+        'Content-Type' => 'application/ld+json'
+    ];
 
     /**
      * The last request that was used to make the response
@@ -54,21 +51,9 @@ class RequestManager
      */
     private $lastRequest;
 
-    /**
-     * Returns the payload from the current scope within
-     * the response.
-     *
-     * @return mixed
-     */
-    public function getScopePayload()
+    public function __construct(KernelInterface $kernel)
     {
-        $payload = $this->getResponsePayload();
-
-        if (!$this->scope) {
-            return $payload;
-        }
-
-        return $this->arrayGet($payload, $this->scope, true);
+        $this->client = $kernel->getContainer()->get('test.api_platform.client');
     }
 
     /**
@@ -95,7 +80,7 @@ class RequestManager
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    private function getResponsePayload()
+    public function getResponsePayload()
     {
         $json = json_decode($this->getLastResponse()->getContent(false));
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -172,7 +157,7 @@ class RequestManager
      * @param string $value
      * @return void
      */
-    public function addRequestHeader(string $headerName, $value)
+    public function setRequestHeader(string $headerName, $value)
     {
         $this->requestHeaders[$headerName] = $value;
     }
@@ -211,11 +196,11 @@ class RequestManager
     /**
      * Set payload of the request
      *
-     * @param  string  $requestPayload  Payload of the request
+     * @param  $requestPayload  Payload of the request
      *
      * @return  self
      */
-    public function setRequestPayload(string $requestPayload)
+    public function setRequestPayload($requestPayload)
     {
         $this->requestPayload = $requestPayload;
 
@@ -232,8 +217,8 @@ class RequestManager
     public function request(string $method, string $resource)
     {
         return $this->client->request($method, $resource, [
-            'headers' => $this->requestHeaders,
-            'body'    => $this->requestPayload,
+            'headers' => $this->getRequestHeaders(),
+            'body'    => $this->getRequestPayload(),
         ]);
     }
 }

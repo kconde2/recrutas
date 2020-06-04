@@ -41,7 +41,7 @@ class FixtureManager implements ProcessorInterface
      */
     public function preProcess(string $fixtureId, $object): void
     {
-        $this->referenceManager->addReference($fixtureId, $object);
+        $this->referenceManager->setReference($fixtureId, $object);
     }
 
     /**
