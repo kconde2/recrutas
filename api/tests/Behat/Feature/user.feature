@@ -8,12 +8,13 @@ Feature: _User_
     Given I have the payload
     """
     {
-      "email": "reichel.zetta@hotmail.com",
+      "email": "{{ user_1.email }}",
       "password": "change-this-password"
     }
     """
     Given I request "POST /authentication_token"
     Then the response status code should be 200
+    # And the response should contain "token"
     # Then print last response
 
   Scenario: Register

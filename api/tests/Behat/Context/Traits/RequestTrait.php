@@ -2,60 +2,22 @@
 
 namespace App\Tests\Behat\Context\Traits;
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
+use App\Tests\Behat\Manager\RequestManager;
 use Behat\Gherkin\Node\PyStringNode;
 use GuzzleHttp\Psr7\Request;
 
 trait RequestTrait
 {
-    /**
-     * Payload of the request
-     *
-     * @var string
-     */
-    protected $requestPayload;
-
-    /**
-     * Payload of the response
-     *
-     * @var string
-     */
-    protected $responsePayload;
-
-    /**
-     * The Guzzle client
-     *
-     * @var Client
-     */
-    protected $client;
-
-    /**
-     * The response of the HTTP request
-     *
-     * @var \Symfony\Contracts\HttpClient\ResponseInterface
-     */
-    protected $lastResponse;
-
-    /**
-     * Headers sent with request
-     *
-     * @var array[]
-     */
-    protected $requestHeaders = array();
-
-    /**
-     * The last request that was used to make the response
-     *
-     * @var
-     */
-    protected $lastRequest;
+    private RequestManager $requestManager;
 
     /**
      * @Given I have the payload
      */
     public function iHaveThePayload(PyStringNode $requestPayload)
     {
-        $this->requestPayload = json_decode($requestPayload->getRaw());
+        $requestPayload = $this->referenceManager->renderPyStringNodeTemplate($requestPayload);
+
+        $this->requestManager->setRequestPayload(json_decode($requestPayload->getRaw()));
     }
 
     /**
@@ -65,34 +27,35 @@ trait RequestTrait
     {
         $method = strtoupper($httpMethod);
 
-        $options = [];
+        $resource = $this->referenceManager->renderTwigTemplate($resource);
 
-        if ($this->authUser) {
-            $options = [
-                'auth' => [
-                    $this->authUser,
-                    $this->authPassword
-                ]
-            ];
-        }
+        // $options = [];
 
-        $this->lastRequest = new Request(
+        // if ($this->authUser) {
+        //     $options = [
+        //         'auth' => [
+        //             $this->authUser,
+        //             $this->authPassword
+        //         ]
+        //     ];
+        // }
+        // $this->authManager->isAuthenticated()
+        // Add token to header
+        // Otherwise remove token from header
+
+        $request = new Request(
             $httpMethod,
             $resource,
-            $this->requestHeaders,
-            json_encode($this->requestPayload)
+            $this->requestManager->getRequestHeaders(),
+            $this->requestManager->getRequestPayload()
         );
+
+        $this->requestManager->setLastRequest($request);
 
         try {
             // Send request
-            $this->lastResponse = $this->client->request(
-                $method,
-                $resource,
-                [
-                    'headers' => $this->requestHeaders,
-                    'body'    => json_encode($this->requestPayload),
-                ]
-            );
+            $response = $this->requestManager->request($method, $resource);
+            $this->requestManager->setLastResponse($response);
         } catch (\Exception $e) {
             $response = $e->getMessage();
 
@@ -100,7 +63,7 @@ trait RequestTrait
                 throw $e;
             }
 
-            $this->lastResponse = $e->getMessage();
+            $this->requestManager->setLastResponse($response);
             throw new \Exception('Bad response.');
         }
     }
@@ -112,7 +75,7 @@ trait RequestTrait
      */
     public function iSetTheHeaderToBe($headerName, $value)
     {
-        $this->requestHeaders[$headerName] = $value;
+        $this->requestManager->setRequestHeader($headerName, $value);
     }
 
     /**
@@ -122,7 +85,7 @@ trait RequestTrait
      */
     public function theHeaderShouldBe($headerName, $expectedHeaderValue)
     {
-        $response = $this->getLastResponse();
+        $response = $this->requestManager->getLastResponse();
 
         assertEquals($expectedHeaderValue, (string) $response->getHeader($headerName));
     }
@@ -134,7 +97,7 @@ trait RequestTrait
      */
     public function theHeaderShouldExist($headerName)
     {
-        $response = $this->getLastResponse();
+        $response = $this->requestManager->getLastResponse();
 
         assertTrue($response->hasHeader($headerName));
     }
@@ -146,7 +109,7 @@ trait RequestTrait
      */
     public function theResponseStatusCodeShouldBe($statusCode)
     {
-        $response = $this->getLastResponse();
+        $response = $this->requestManager->getLastResponse();
 
         assertEquals(
             $statusCode,
@@ -155,73 +118,15 @@ trait RequestTrait
         );
     }
 
-    /**
-     * Checks the response exists and returns it.
-     *
-     * @return \Symfony\Contracts\HttpClient\ResponseInterface
-     * @throws \Exception
-     */
-    protected function getLastResponse()
-    {
-        if (!$this->lastResponse) {
-            throw new \Exception("You must first make a request to check a response.");
-        }
-
-        return $this->lastResponse;
-    }
-
-    /**
-     * Return the response payload from the current response.
-     *
-     * @return mixed|string
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
-     */
-    protected function getResponsePayload()
-    {
-        $json = json_decode($this->getLastResponse()->getContent(false));
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            $message = 'Failed to decode JSON body ';
-
-            switch (json_last_error()) {
-                case JSON_ERROR_DEPTH:
-                    $message .= '(Maximum stack depth exceeded).';
-                    break;
-                case JSON_ERROR_STATE_MISMATCH:
-                    $message .= '(Underflow or the modes mismatch).';
-                    break;
-                case JSON_ERROR_CTRL_CHAR:
-                    $message .= '(Unexpected control character found).';
-                    break;
-                case JSON_ERROR_SYNTAX:
-                    $message .= '(Syntax error, malformed JSON): ' . "\n\n" . $this->getLastResponse()->getContent(false);
-                    break;
-                case JSON_ERROR_UTF8:
-                    $message .= '(Malformed UTF-8 characters, possibly incorrectly encoded).';
-                    break;
-                default:
-                    $message .= '(Unknown error).';
-                    break;
-            }
-
-            throw new \Exception($message);
-        }
-
-        $this->responsePayload = $json;
-        return $this->responsePayload;
-    }
-
-    /**
+     /**
      * Returns the payload from the current scope within
      * the response.
      *
      * @return mixed
      */
-    protected function getScopePayload()
+    public function getScopePayload()
     {
-        $payload = $this->getResponsePayload();
+        $payload = $this->requestManager->getResponsePayload();
 
         if (!$this->scope) {
             return $payload;

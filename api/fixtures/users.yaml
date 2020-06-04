@@ -1,7 +1,29 @@
 App\Entity\User:
-  user_{1..50}:
+  user_{1..5}:
     email: <email()>
     roles: <randomElements(['ROLE_APPLICANT','ROLE_RECRUITER'])>
+    firstname: <firstName()>
+    lastname: <lastName()>
+    gender: <randomElement(['M','F'])>
+    profileImage: <imageUrl(640, 480)>
+    address: <address()>
+    password: <{password}>
+    isActive: true
+
+  ROLE_RECRUITER:
+    email: <email()>
+    roles: [ROLE_RECRUITER]
+    firstname: <firstName()>
+    lastname: <lastName()>
+    gender: <randomElement(['M','F'])>
+    profileImage: <imageUrl(640, 480)>
+    address: <address()>
+    password: <{password}>
+    isActive: true
+
+  ROLE_APPLICANT:
+    email: <email()>
+    roles: [ROLE_APPLICANT]
     firstname: <firstName()>
     lastname: <lastName()>
     gender: <randomElement(['M','F'])>

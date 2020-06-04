@@ -14,9 +14,16 @@ class FixtureManager implements ProcessorInterface
      */
     private $fixtureLoader;
 
-    public function __construct(IriConverterInterface $iriConverter, KernelInterface $kernel)
+    private $referenceManager;
+
+    public function __construct(
+        IriConverterInterface $iriConverter,
+        KernelInterface $kernel,
+        ReferenceManager $referenceManager
+        )
     {
         $this->fixtureLoader = $kernel->getContainer()->get('fidry_alice_data_fixtures.loader.doctrine');
+        $this->referenceManager = $referenceManager;
     }
 
     /**
@@ -34,7 +41,7 @@ class FixtureManager implements ProcessorInterface
      */
     public function preProcess(string $fixtureId, $object): void
     {
-        // do nothing now
+        $this->referenceManager->setReference($fixtureId, $object);
     }
 
     /**

@@ -21,8 +21,8 @@ trait HookTrait
     public function beforeScenario()
     {
         //var_dump("before sena");
-        /** Init default content-type */
-        $this->requestHeaders["content-type"] = "application/ld+json";
+        /** Init default Content-Type */
+        $this->requestHeaders["Content-Type"] = "application/ld+json";
         StaticDriver::beginTransaction();
     }
 
@@ -32,7 +32,7 @@ trait HookTrait
     public function afterScenario()
     {
         //var_dump("after sena");
-        $this->requestHeaders["content-type"] = "";
+        $this->requestHeaders["Content-Type"] = "";
         StaticDriver::rollBack();
     }
 

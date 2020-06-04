@@ -1,11 +1,18 @@
 Feature: _Offer_
+  Background:
+    Given the following fixtures files are loaded:
+      | parameters     |
+      | users          |
+      | offers          |
 
   Scenario: test get offer
+    Given I authenticate as "RECRUITER"
     Given I request "GET /offers"
     When the response status code should be 200
     Then print last response
 
   Scenario: test post offer
+    Given I authenticate as "RECRUITER"
     Given I have the payload
     """
     {
@@ -15,7 +22,7 @@ Feature: _Offer_
       "startAt": "2020-06-03",
       "contratType": "cdi",
       "workplace": "Paris",
-      "author": "users/1"
+      "author": "users/{{ auth_user.id }}"
     }
     """
     When I request "POST /offers"
@@ -23,11 +30,13 @@ Feature: _Offer_
     Then print last response
 
   Scenario: test get offer 1
-    Given I request "GET /offers/1"
+    Given I authenticate as "RECRUITER"
+    Given I request "GET /offers/{{ offer_1.id }}"
     When the response status code should be 200
     Then print last response
 
   Scenario: test put offer 2
+    Given I authenticate as "RECRUITER"
     Given I have the payload
     """
     {
@@ -37,14 +46,15 @@ Feature: _Offer_
       "startAt": "2020-06-03",
       "contratType": "cdi",
       "workplace": "Paris",
-      "author": "users/1"
+      "author": "users/{{ auth_user.id }}"
     }
     """
-    When I request "PUT /offers/2"
+    When I request "PUT /offers/{{ offer_2.id }}"
     When the response status code should be 200
     Then print last response
 
   Scenario: test patch offer 2
+    Given I authenticate as "RECRUITER"
     Given I have the payload
     """
     {
@@ -52,11 +62,12 @@ Feature: _Offer_
       "workplace": "Brussels"
     }
     """
-    When I request "PATCH /offers/2"
+    When I request "PATCH /offers/{{ offer_3.id }}"
     When the response status code should be 200
     Then print last response
 
   Scenario: test delete offer 3
-    Given I request "DELETE /offers/40"
+    Given I authenticate as "RECRUITER"
+    Given I request "DELETE /offers/{{ offer_40.id }}"
     When the response status code should be 200
     Then print last response
